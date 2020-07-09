@@ -39,7 +39,9 @@ Additionally it may contain the following information:
     "discord-server" : "DISCORD_LINK",
     "facebook" : "FACEBOOK_LINK",
     "instagram" : "INSTAGRAM_LINK",
-    "twitter" : "TWITTER_LINK"
+    "twitter" : "TWITTER_LINK",
+    "twitch-channel" : "TWITCH_CHANNEL_NAME",
+    "twitch-placeholder-img" : "PLACEHOLDER_IMG"
 
 ## Startpage Sections
 ### Events
