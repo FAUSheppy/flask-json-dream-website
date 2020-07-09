@@ -195,7 +195,11 @@ def siteMap():
     for n in filter(lambda x: x["active"], news):
         urls += [("/news?uid={}".format(n["uid"]), n["parsed-time"], 0.8)]
 
-    top = et.Element('urlset')
+    hostname = flask.request.headers.get("X-REAL-HOSTNAME")
+    if not hostname:
+        hostname = "localhost"
+
+    top = et.Element('urlset', xmlns="http://www.sitemaps.org/schemas/sitemap/0.9")
     for url, lastmod, priority in urls:
         child = et.SubElement(top, 'url')
 
@@ -204,10 +208,12 @@ def siteMap():
         childPrio    = et.SubElement(child, 'priority')
 
         childPrio.text    = str(priority)
-        childLastmod.text = lastmod.isoformat()
-        chilLoc.text      = url
+        childLastmod.text = lastmod.strftime("%Y-%m-%d")
+        chilLoc.text      = "https://" + hostname + url
 
-    return flask.Response(et.tostring(top, 'utf-8'), mimetype='application/xml')
+    xmlDump = "<?xml version='1.0' encoding='UTF-8'?>"
+    xmlDump += et.tostring(top, encoding='UTF-8', method='xml').decode()
+    return flask.Response(xmlDump, mimetype='application/xml')
 
 if __name__ == "__main__":
 
