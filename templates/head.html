@@ -12,3 +12,18 @@
 <!-- Bootstrap core JS -->
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="{{ conf['siteTitle'] }}" />
+<meta property="og:description" content="{{ conf['siteDescription']  }}" />
+<meta property="og:url" content="{{ url_for(request.endpoint) }}" />
+<meta property="og:image" content="{{ conf['siteLogo'] }}">
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "{{ conf['siteURL'] }}",
+      "logo": "{{ conf['siteLogo'] }}"
+    }
+</script>

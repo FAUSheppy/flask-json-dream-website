@@ -1,5 +1,9 @@
 {
     "siteTitle":"Site Title",
+    "siteDescription" : "Site Description",
+    "siteLogo" : "Site Logo URL",
+    "siteURL" : "Site Base URL",
+
     "teamspeak-server" : "teamspeak.com",
     "discord-server" : "https://discord.gg/",
     "facebook" : "https://www.facebook.com/",

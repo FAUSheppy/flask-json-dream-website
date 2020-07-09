@@ -30,7 +30,10 @@ The page and most of it's content is configured via json. To use the CalDav-even
 The main Config ``config.json`` which must be placed in the project-root must contain the following values:
 
     {
-        "siteTitle":"the default site title",
+        "siteTitle" : "the default site title",
+	"siteDescription" : "a description for this site",
+	"siteLogo" : "url to logo",
+	"siteURL": "the url of this site"
     }
 
 Additionally it may contain the following information:
