@@ -172,7 +172,7 @@ def sendStatic(path):
 
 @app.route('/defaultFavicon.ico')
 def icon():
-    return app.send_static_file('defaultFavicon.ico')
+    return flask.send_from_directory('static', 'defaultFavicon.ico')
 
 @app.route("/sitemap.xml")
 def siteMap():
