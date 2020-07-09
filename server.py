@@ -137,17 +137,19 @@ def people():
 @app.route("/news")
 def news():
 
-    uid = int(flask.request.args.get("uid"))
+    uid = flask.request.args.get("uid")
 
     news = parseNewsDirWithTimeout()
     newsDict = dict()
     for n in news:
         newsDict.update( { n["uid"] : n } )
 
-    if not uid or not newsDict[uid]:
+    if not uid:
+        article = sorted(news, key=lambda n: n["parsed-time"])[-1]
+    elif not newsDict[int(uid)]:
         return ("", 404)
-
-    article = newsDict[uid]
+    else:
+        article = newsDict[int(uid)]
     try:
         with open(article["markdown-file"]) as f:
             article.update( { "markdown-content" : markdown2.markdown(f.read()) } )
