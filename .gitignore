@@ -1,0 +1,7 @@
+js/
+css/
+*.swp
+*.jpg
+*.png
+cache.json
+auth.txt

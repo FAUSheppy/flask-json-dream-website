@@ -1,0 +1,10 @@
+{
+	"title" : "Title",
+	"uid" : 15,
+	"markdown-file" : "markdown/example_markdown.md",
+	"active" : true,
+	"description" : "Lorem markdownum Eurytion Troiana *nescioquam* fuit, tenuesque manebant illic admittitur vultu. Praereptaque potitus vento.",
+	"date" : 1594282463,
+	"timeout-relative-weeks" : 60,
+	"timeout-fixed" : 2094282463
+}

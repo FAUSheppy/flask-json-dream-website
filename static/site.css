@@ -1,0 +1,70 @@
+html {
+    height: 100vh;
+}
+
+.masthead {
+  height: 50vh;
+  min-height: 250px;
+  background-image: url('/static/pictures/wallpaper.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-special{
+  background-color: #eae9e9;
+}
+
+.text-color-special{
+  color: #eae9e9;
+}
+
+.stretched-link::after {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    pointer-events: auto;
+    content: "";
+    background-color: rgba(0,0,0,0);
+}
+.hover-to-75:hover *{
+    opacity: 0.75;
+    display: unset;
+}
+
+.position-relative{
+  position: relative;
+}
+
+.centered-text-in-image{
+  position: absolute;
+  color: black !important;
+  font-weight: bold;
+  font-size: x-large;
+  top: 50%;
+  text-decoration: none !important;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
+.centered-text-in-image:hover{
+  display: none;
+  opacity: 1 !important;
+}
+
+.image-min-dimensions{
+  min-width: 330px;
+  /*min-height: 220px; */
+}
+
+.text-min-dimensions{
+  min-width: 300px;
+}
+
+.image-max-dimensions{
+  max-width: 400px;
+}

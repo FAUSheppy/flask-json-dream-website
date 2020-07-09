@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	{% include 'head.html' %}
+	<title>{{ article["title"] }}</title>
+
+</head>
+<body class="bg-special">
+	<style>
+		p{
+			margin-top: 30px;
+		}
+	</style>
+	{% include 'navbar.html' %}
+	<div class="container mt-5 mb-5">
+		<div class="row impressum mt-5"></div>
+			<div class="col-lg-12" style="font-size: large;">
+				<h3 mb-2>{{ article["parsed-time"].strftime("%d.%m. %Y") }}</h3>
+				{{ article["markdown-content"] | safe }}
+				<div class="pb-3"></div>
+		  	</div>
+		</div>
+	</div>
+	{% include 'footer.html' %}
+
+</body>
+</html>

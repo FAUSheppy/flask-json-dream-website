@@ -1,0 +1,18 @@
+<div class="row">
+  {% for a in announcements if a.get("active") %}
+  <div class="col-md-4 text-dark">
+    <div class="card mb-4 box-shadow  bg-special">
+      <div class="card-body">
+	<h4>{{ a["parsed-time"].strftime("%d.%m.%y") }}</h4>
+        <h2>{{ a["title"] }}</h2>
+        <p>{{ a["description"] }}</p>
+        <p>
+        <a class="mt-3 btn btn-secondary float-right" href="/news?uid={{ a['uid'] }}" role="button">
+            {% if a["link-title"] %} {{ a["link-title"] }} {% else %} Mehr.. {% endif %}
+        </a>
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>

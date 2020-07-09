@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  {% include 'head.html' %}
+
+  <title>{{ conf["siteTitle"] }}</title>
+  
+  <!-- Load the Twitch embed script -->
+  <!-- <script src="https://embed.twitch.tv/embed/v1.js"></script> -->
+  <script src="https://sslrelay.atlantishq.de/twitch"></script>
+
+</head>
+<body>
+<!-- NAVBAR -->
+{% include 'navbar.html' %}
+
+<!-- Site wellcome header -->
+<header class="masthead">
+  <div class="container h-50">
+    <div class="row h-100 align-items-center">
+        <div class="col-12 text-center">
+        <div style="opacity: 0;"></div>
+        <div class="mt-5" style="opacity: 0;"></div>
+        <!--
+          <h1 class="font-weight-light">{{ conf["siteWellcomeMsg"] }}</h1>
+          <p class="lead">{{ conf["siteWellcomeMsgSub"] }}</p>
+          -->
+        </div>
+    </div>
+  </div>
+</header>
+
+<!-- main links -->
+<div class="bg-secondary">
+  <div class="container pb-2 pt-2">
+    {% include 'events.html' %}
+  </div>
+</div>
+
+<!-- announcements -->
+{% if announcements %}
+<div class="bg-secondary">
+  <div class="container pb-2 pt-2">
+	{% include 'announcements.html' %}
+  </div>
+</div>
+{% endif %}
+
+<!-- twitch -->
+  {% if conf["twitch-channel"] %}
+  <div class="bg-dark pb-4">
+    <div class="container pt-5 text-color-special">
+
+      <div id="twitch-consent-placeholder" class="card bg-dark text-white">
+        <img style="min-width: 80%; min-height: 200px;"
+	     class="card-img" src="/static/pictures/{{ conf['twitch-placeholder-img'] }}" >
+        <div class="card-img-overlay">
+          <label class="switch mt-3">
+            <input id="toogle-twitch" class="custom-control-input"
+              type="checkbox" onchange="handleToggle(this.id)">
+            <span class="slider"></span>
+          </label>
+          <div class="switch-caption ml-3 mt-3" style="font-size: x-large;">
+                  Laden externe Inhalte von Twitch.tv zulassen
+          </div>
+        </div>
+      </div>
+      <!-- Add a placeholder for the Twitch embed -->
+      <div id="twitch-embed"></div>
+      <script>
+          document.getElementById("toogle-twitch").checked = false
+          function handleToggle(id){
+              if(document.getElementById(id).checked){
+                createTwitchFrame()
+                document.getElementById("twitch-consent-placeholder").style.display = "none";
+              }else{
+                document.getElementById("twitch-consent-placeholder").style.display = "";
+                destroyTwitchFrame()
+              }
+          }
+
+          function createTwitchFrame(){
+	      options = { width: "100%", height: 480, channel: "{{ conf['twitch-channel'] }}" }
+              new Twitch.Embed("twitch-embed", options);
+          }
+
+          function destroyTwitchFrame(){
+              window.location.reload()
+          }
+      </script>
+
+
+      <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
+    </div>
+  </div>
+  {% endif %}
+
+  {% for section in vereinSections %}
+  <div class="{% if loop.index %2 == 1 %} bg-secondary {% else %} bg-dark {% endif %} pt-2 pb-2">
+    <div class="container text-color-special">
+      <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>
+        <div class="mt-3 col image-min-dimensions">
+          <img class="img-responsive w-100" src="{{ section['picture'] }}">
+        </div>
+        <div class="mt-3 col text-min-dimensions">
+          <h1>{{ section['title'] }}</h1>
+          <p class="mt-3">
+            {{ section["text"] }}
+          </p>
+          {% if section["moreInfoButtonText"] %}
+            <button type=button 
+                    onclick="window.location.href='{{ section['moreInfoButtonHref'] }}'" 
+                    class="mt-3 btn btn-light">{{ section["moreInfoButtonText"]  }}
+            </button>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  </div>
+  {% include 'footer.html' %}
+</body>
+</html>
