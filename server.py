@@ -8,6 +8,10 @@ import caldav
 import datetime as dt
 import markdown2
 
+# sitemap utilities #
+from werkzeug.routing import BuildError
+import xml.etree.ElementTree as et
+
 VEREIN_SECTIONS_DIR = "sections/"
 MAIN_LINKS_DIR = "main-links/"
 NEWS_DIR = "news/"
@@ -170,6 +174,41 @@ def sendStatic(path):
 def icon():
     return app.send_static_file('defaultFavicon.ico')
 
+@app.route("/sitemap.xml")
+def siteMap():
+    urls = []
+    for rule in app.url_map.iter_rules():
+        skips = ["icon", "siteMap", "invalidate", "news"]
+        if any([s in rule.endpoint for s in skips]):
+            continue
+        if "GET" in rule.methods:
+            try:
+                url = flask.url_for(rule.endpoint, **(rule.defaults or {}))
+                priority = 0.8
+                if rule.endpoint == "root":
+                    priority = 1.0
+                urls += [(url, app.config["START_TIME"], priority)]
+            except BuildError:
+                pass
+
+    news = parseNewsDirWithTimeout()
+    for n in filter(lambda x: x["active"], news):
+        urls += [("/news?uid={}".format(n["uid"]), n["parsed-time"], 0.8)]
+
+    top = et.Element('urlset')
+    for url, lastmod, priority in urls:
+        child = et.SubElement(top, 'url')
+
+        chilLoc      = et.SubElement(child, 'loc')
+        childLastmod = et.SubElement(child, 'lastmod')
+        childPrio    = et.SubElement(child, 'priority')
+
+        childPrio.text    = str(priority)
+        childLastmod.text = lastmod.isoformat()
+        chilLoc.text      = url
+
+    return flask.Response(et.tostring(top, 'utf-8'), mimetype='text/xml')
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Projects Showcase',
@@ -195,5 +234,7 @@ if __name__ == "__main__":
 
     if not args.no_update_on_start:
         updateEventsFromCalDav()
+
+    app.config["START_TIME"] = dt.datetime.now()
 
     app.run(host=args.interface, port=args.port)
