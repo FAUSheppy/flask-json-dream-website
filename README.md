@@ -100,7 +100,7 @@ The order is again specified by the alpha-numeric order of the files.
 New subpages must be added as a new location in the *server.py* like this:
 
     @app.route("/subpage")
-        def subpage():
-            return flask.render_template("subpage.html", conf=mainConfig)
+    def subpage():
+        return flask.render_template("subpage.html", conf=mainConfig)
 
 See the example subpage-templates in *templates/*.
