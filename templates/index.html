@@ -34,7 +34,7 @@
 
 <!-- main links -->
 <div class="bg-secondary">
-  <div class="container pb-2 pt-2">
+  <div class="container container-responsive pb-2 pt-2">
     {% include 'events.html' %}
   </div>
 </div>
@@ -54,15 +54,15 @@
     <div class="container pt-5 text-color-special">
 
       <div id="twitch-consent-placeholder" class="card bg-dark text-white">
-        <img style="min-width: 80%; min-height: 200px;"
-	     class="card-img" src="/static/pictures/{{ conf['twitch-placeholder-img'] }}" >
+         <img style="min-width: 80%; min-height: 200px;"
+            class="card-img" src="/static/pictures/{{ conf['twitch-placeholder-img'] }}" >
         <div class="card-img-overlay">
-          <label class="switch mt-3">
+          <label class="switch mt-3 mt-0-u440">
             <input id="toogle-twitch" class="custom-control-input"
               type="checkbox" onchange="handleToggle(this.id)">
             <span class="slider"></span>
           </label>
-          <div class="switch-caption ml-3 mt-3" style="font-size: x-large;">
+          <div class="switch-caption ml-3 mt-3 mt-0-u440" style="font-size: x-large;">
                   Laden externe Inhalte von Twitch.tv zulassen
           </div>
         </div>

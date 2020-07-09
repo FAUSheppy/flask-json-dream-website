@@ -68,3 +68,22 @@ html {
 .image-max-dimensions{
   max-width: 400px;
 }
+
+@media(max-width: 440px){
+   .event-responsive{
+      padding-left: 0;
+      font-size: 5vw;
+   }
+   .date-responsive{
+      margin-right: 4vw !important;
+   }
+   .container-responsive{
+      margin-left: 0;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: 0;
+   }
+   .mt-0-u440{
+      margin-top: 0 !important;
+   }
+}

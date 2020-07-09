@@ -61,3 +61,9 @@
   .switch-caption {
       float: left;
   }
+
+@media(max-width: 440px){
+  .switch-caption{
+      font-size: 7vw !important;
+  }
+}

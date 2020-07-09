@@ -6,17 +6,20 @@
     {% for event in events %}
       <div class="moreDates" {% if loop.index > 3 %} style="display: none;" {% endif %}>
         <div class="row">
-            <div class="pt-1 border-bottom {% if loop.index == 1 %} border-top {% endif %} col">
+            <div class="event-responsive pt-1 border-bottom 
+		    {% if loop.index == 1 %} border-top {% endif %} col">
               <div class="d-flex justify-content-center align-items-center">
-                <h1 class="mr-5 text-primary font-weight-bold text-info">{{ event["day"] }}</h1>
-                  <div>
-                    <p class="font-weight-bold mb-0 text-dark">{{ event["month"] }}</p>
-                    <p class="mb-2">{{ event["year"] }}</p>
-                  </div>
+                <h1 class="mr-5 text-primary font-weight-bold text-info date-responsive ">
+		    {{ event["day"] }}
+		</h1>
+                <div>
+                  <p class="font-weight-bold mb-0 text-dark">{{ event["month"] }}</p>
+                  <p class="mb-2">{{ event["year"] }}</p>
+                </div>
               </div>
             </div>
             <div class="pt-1 border-bottom {% if loop.index == 1 %} border-top {% endif %} col pl-3">
-              <p class="text-dark font-weight-bold mb-0">
+              <p class="event-responsive text-dark font-weight-bold mb-0">
                   {{ event["description"] }} 
                   {% if event.get("location") %} @{{ event["location"] }} {% endif %}
               </p>
