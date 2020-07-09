@@ -16,7 +16,7 @@ VEREIN_SECTIONS_DIR = "sections/"
 MAIN_LINKS_DIR = "main-links/"
 NEWS_DIR = "news/"
 
-app = flask.Flask("athq-landing-page")
+app = flask.Flask("athq-landing-page", static_folder=None)
 mainConfig = dict()
 with open("config.json") as f:
     mainConfig = json.load(f)
