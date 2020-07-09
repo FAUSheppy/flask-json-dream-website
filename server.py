@@ -207,7 +207,7 @@ def siteMap():
         childLastmod.text = lastmod.isoformat()
         chilLoc.text      = url
 
-    return flask.Response(et.tostring(top, 'utf-8'), mimetype='text/xml')
+    return flask.Response(et.tostring(top, 'utf-8'), mimetype='application/xml')
 
 if __name__ == "__main__":
 
