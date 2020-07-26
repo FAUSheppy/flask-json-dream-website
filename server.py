@@ -13,9 +13,10 @@ from werkzeug.routing import BuildError
 import xml.etree.ElementTree as et
 
 # paths
-SECTIONS_DIR     = "sections/"
-NEWS_DIR         = "news/"
-PICTURES_DIR     = "pictures/"
+SECTIONS_DIR   = "sections/"
+NEWS_DIR       = "news/"
+PICTURES_DIR   = "pictures/"
+MAIN_LINKS_DIR = "mainLinks/"
 
 # json config keys
 TIMEOUT_RELATIVE = "timeout-relative-weeks"
@@ -128,6 +129,7 @@ def invalidateEventCache():
 @app.route("/")
 def root():
     return flask.render_template("index.html", conf=app.config,
+                                            mainLinks=readJsonDir(app.config["MAIN_LINKS_DIR"]),
                                             events=getEventsCache(),
                                             moreEvents=len(getEventsCache())>3,
                                             sections=readJsonDir(app.config["SECTIONS_DIR"]),
@@ -242,8 +244,9 @@ def siteMap():
 
 @app.before_first_request
 def init():
-    app.config["SECTIONS_DIR"] = os.path.join(app.config["CONTENT_DIR"], SECTIONS_DIR)
-    app.config["NEWS_DIR"]     = os.path.join(app.config["CONTENT_DIR"], NEWS_DIR)
+    app.config["SECTIONS_DIR"]   = os.path.join(app.config["CONTENT_DIR"], SECTIONS_DIR)
+    app.config["NEWS_DIR"]       = os.path.join(app.config["CONTENT_DIR"], NEWS_DIR)
+    app.config["MAIN_LINKS_DIR"] = os.path.join(app.config["CONTENT_DIR"], MAIN_LINKS_DIR)
 
     if app.config["RELOAD_CALENDAR_ON_START"]:
         updateEventsFromCalDav()

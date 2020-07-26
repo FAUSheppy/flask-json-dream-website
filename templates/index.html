@@ -30,12 +30,32 @@
   </div>
 </header>
 
-<!-- main links -->
 <div class="bg-secondary">
   <div class="container container-responsive pb-2 pt-2">
     {% include 'events.html' %}
   </div>
 </div>
+
+<!-- picture links -->
+{% if mainLinks %}
+<div class="bg-dark pt-5">
+  <div class="container">
+    <div class="row">
+      {% for card in mainLinks %}
+      <div class="col-md-3">
+        <div class="card mb-4 box-shadow border-0 hover-to-75">
+          <img class="card-img-top" src="{{ card['picture'] }}">
+          <div class="card-img-overlay">
+            <a href="{{ card['link'] }}" class="stretched-link"></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+      <hr>
+    </div>
+  </div>
+</div>
+{% endif %}
 
 <!-- announcements -->
 {% if announcements %}
