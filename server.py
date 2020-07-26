@@ -17,6 +17,7 @@ SECTIONS_DIR   = "sections/"
 NEWS_DIR       = "news/"
 PICTURES_DIR   = "pictures/"
 MAIN_LINKS_DIR = "mainLinks/"
+CACHE_FILE     = "cache.json"
 
 # json config keys
 TIMEOUT_RELATIVE = "timeout-relative-weeks"
