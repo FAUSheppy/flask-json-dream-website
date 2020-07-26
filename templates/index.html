@@ -110,10 +110,9 @@
             {{ section["text"] }}
           </p>
           {% if section["moreInfoButtonText"] %}
-            <button type=button 
-                    onclick="window.location.href='{{ section['moreInfoButtonHref'] }}'" 
-                    class="mt-3 btn btn-light">{{ section["moreInfoButtonText"]  }}
-            </button>
+            <a type=button href="{{ section['moreInfoButtonHref'] }}"
+              class="mt-3 btn btn-light">{{ section["moreInfoButtonText"] }}
+            </a>
           {% endif %}
         </div>
       </div>
