@@ -36,7 +36,6 @@ PRIORITY_SECONDARY = 0.8
 # other
 HTTP_NOT_FOUND = 404
 EMPTY_STRING   = ""
-CACHE_FILE     = "cache.json"
 READ           = "r"
 WRITE          = "w"
 
