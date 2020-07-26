@@ -15,15 +15,15 @@
           <a class="nav-link" href="/">Home</a>
         </li>
 
-        {% if conf["teamspeak-server"] %}
+        {% if conf["TEAMSPEAK_SERVER"] %}
         <li class="nav-item right">
-          <a class="nav-link" href="ts3server://{{ conf['teamspeak-server'] }}">Teamspeak</a>
+          <a class="nav-link" href="ts3server://{{ conf['TEAMSPEAK_SERVER'] }}">Teamspeak</a>
         </li>
         {% endif %}
         
-        {% if conf["discord-server"] %}
+        {% if conf["DISCORD_SERVER"] %}
         <li class="nav-item right">
-          <a class="nav-link" href="{{ conf['discord-server'] }}">Discord</a>
+          <a class="nav-link" href="{{ conf['DISCORD_SERVER'] }}">Discord</a>
         </li>
         {% endif %}
 
@@ -32,21 +32,21 @@
       <!-- right side -->
       <ul class="navbar-nav">
         
-        {% if conf["instagram"] %}
+        {% if conf["INSTAGRAM"] %}
         <li class="nav-item right">
-          <a class="nav-link" href="{{ conf['instagram'] }}">Instagram</a>
+          <a class="nav-link" href="{{ conf['INSTAGRAM'] }}">Instagram</a>
         </li>
         {% endif %}
 
-        {% if conf["facebook"] %}
+        {% if conf["FACEBOOK"] %}
         <li class="nav-item right">
-          <a class="nav-link" href="{{ conf['facebook'] }}">Facebook</a>
+          <a class="nav-link" href="{{ conf['FACEBOOK'] }}">Facebook</a>
         </li>
         {% endif %}
 
-        {% if conf["twitter"] %}
+        {% if conf["TWITTER"] %}
         <li>
-          <a class="nav-link" href="{{ conf['twitter'] }}">Twitter</a>
+          <a class="nav-link" href="{{ conf['TWITTER'] }}">Twitter</a>
         </li>
         {% endif %}
 

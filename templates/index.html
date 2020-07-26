@@ -5,8 +5,6 @@
 
   {% include 'head.html' %}
 
-  <title>{{ conf["siteTitle"] }}</title>
-  
   <!-- Load the Twitch embed script -->
   <!-- <script src="https://embed.twitch.tv/embed/v1.js"></script> -->
   <script src="https://sslrelay.atlantishq.de/twitch"></script>
@@ -55,7 +53,7 @@
 
       <div id="twitch-consent-placeholder" class="card bg-dark text-white">
          <img style="min-width: 80%; min-height: 200px;"
-            class="card-img" src="/static/pictures/{{ conf['twitch-placeholder-img'] }}" >
+            class="card-img" src="/pictures/{{ conf['twitch-placeholder-img'] }}" >
         <div class="card-img-overlay">
           <label class="switch mt-3 mt-0-u440">
             <input id="toogle-twitch" class="custom-control-input"
@@ -97,7 +95,7 @@
   </div>
   {% endif %}
 
-  {% for section in vereinSections %}
+  {% for section in sections %}
   <div class="{% if loop.index %2 == 1 %} bg-secondary {% else %} bg-dark {% endif %} pt-2 pb-2">
     <div class="container text-color-special">
       <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>

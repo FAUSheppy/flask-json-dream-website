@@ -1,7 +1,10 @@
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
+
+<meta name="viewport"    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="{{ conf['SITE_DESCRIPTION'] }}">
+<meta name="author"      content="{{ conf['SITE_AUTHOR']      }}">
+<meta name="title"       content="{{ conf['SITE_TITLE']       }}">
+
 <link rel="shortcut icon" href="/defaultFavicon.ico">
 
 <!-- Bootstrap core CSS -->
@@ -14,16 +17,16 @@
 <script src="/static/js/bootstrap.min.js"></script>
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content="{{ conf['siteTitle'] }}" />
-<meta property="og:description" content="{{ conf['siteDescription']  }}" />
+<meta property="og:title" content="{{ conf['SITE_TITLE'] }}" />
+<meta property="og:description" content="{{ conf['SITE_DESCRIPTION']  }}" />
 <meta property="og:url" content="{{ url_for(request.endpoint) }}" />
-<meta property="og:image" content="{{ conf['siteLogo'] }}">
+<meta property="og:image" content="{{ conf['SITE_LOG_URL'] }}">
 
 <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "url": "{{ conf['siteURL'] }}",
-      "logo": "{{ conf['siteLogo'] }}"
+      "url": "{{ conf['SITE_BASE_URL'] }}",
+      "logo": "{{ conf['SITE_LOGO_URL'] }}"
     }
 </script>

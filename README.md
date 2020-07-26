@@ -1,50 +1,14 @@
 # Requirements
 This Softwares runs python3-flask with markdown, json and caldav.
 
-    python3 -m pip install flask, json, caldav, markdown2
+    python3 -m pip install flask, caldav, markdown2
 
 This Software requires bootstrap > 4.13 which can be downloaded [here](https://getbootstrap.com/docs/4.3/getting-started/download/). It must be unpacked into the *static/*-directory into *js* and *css* respectively.
 
 Additionally bootstrap depends on [jquery](https://code.jquery.com) which you have to download into a file called *jquery.min.js* in *static/js/*.
 
-# Usage
-
-    ./server.py -h
-    usage: server.py [-h] [-i INTERFACE] [-p PORT] --cal-info CAL_INFO
-                 [--no-update-on-start]
-
-    optional arguments:
-        -h, --help            show this help message and exit
-        -i INTERFACE          Interface to listen on (default: 0.0.0.0)
-        -p PORT, --port PORT  Port to listen on (default: 5000)
-        --cal-info CAL_INFO   File Containing a public calendar link (default: None)
-        --no-update-on-start  Don't update the calendar on start (default: False)
-
-
 # Configuration
-The page and most of it's content is configured via json. To use the CalDav-events section, you need to add a comma seperated file with the following format format/information:
-
-    URL,USER,PASSWORD
-
-## Main Config
-The main Config ``config.json`` which must be placed in the project-root must contain the following values:
-
-    {
-        "siteTitle" : "the default site title",
-	"siteDescription" : "a description for this site",
-	"siteLogo" : "url to logo",
-	"siteURL": "the url of this site"
-    }
-
-Additionally it may contain the following information:
-
-    "teamspeak-server" : "TS_SERVER",
-    "discord-server" : "DISCORD_LINK",
-    "facebook" : "FACEBOOK_LINK",
-    "instagram" : "INSTAGRAM_LINK",
-    "twitter" : "TWITTER_LINK",
-    "twitch-channel" : "TWITCH_CHANNEL_NAME",
-    "twitch-placeholder-img" : "PLACEHOLDER_IMG"
+The page and most of it's content is configured via json, basic configuration is done in *config.py*.
 
 ## Startpage Sections
 ### Events
@@ -108,4 +72,4 @@ New subpages must be added as a new location in the *server.py* like this:
     def subpage():
         return flask.render_template("subpage.html", conf=mainConfig)
 
-See the example subpage-templates in *templates/*.
+See the example *subpage\_example.html* in *templates/*.

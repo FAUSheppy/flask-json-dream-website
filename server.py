@@ -8,49 +8,64 @@ import caldav
 import datetime as dt
 import markdown2
 
-# sitemap utilities #
+# sitemap utilities
 from werkzeug.routing import BuildError
 import xml.etree.ElementTree as et
 
-VEREIN_SECTIONS_DIR = "sections/"
-MAIN_LINKS_DIR = "main-links/"
-NEWS_DIR = "news/"
+# paths
+SECTIONS_DIR     = "sections/"
+NEWS_DIR         = "news/"
+PICTURES_DIR     = "pictures/"
 
-app = flask.Flask("athq-landing-page", static_folder=None)
-mainConfig = dict()
-with open("config.json") as f:
-    mainConfig = json.load(f)
+# json config keys
+TIMEOUT_RELATIVE = "timeout-relative-weeks"
+TIMEOUT_FIXED    = "timeout-fixed"
+PARSED_TIME      = "parsed-time"
+ACTIVE           = "active"
+DATE             = "date"
+UID              = "uid"
 
-caldavUrl = None
-caldavPassword = None
-caldavUsername = None
+MARKDOWN_FILE_KEY    = "markdown-file"
+MARKDOWN_CONTENT_KEY = "markdown-content"
+
+# sitemap
+PRIORITY_PRIMARY   = 1.0
+PRIORITY_SECONDARY = 0.8
+
+# other
+HTTP_NOT_FOUND = 404
+EMPTY_STRING   = ""
+CACHE_FILE     = "cache.json"
+READ           = "r"
+WRITE          = "w"
+
+app = flask.Flask("FLASK_JSON_DREAM_WEBSITE", static_folder=None)
+app.config.from_object("config")
 
 def updateEventsFromCalDav():
+    '''Load event from a remote calendar'''
 
-
-    if app.config["USE_CALENDAR"]:
+    if app.config["SHOW_CALENDAR"]:
         client = caldav.DAVClient(url=caldavUrl, username=caldavUsername, password=caldavPassword)
         authenticatedClient = client.principal()
         defaultCal = authenticatedClient.calendars()[0]
 
         start = dt.datetime.now()
-        start = start - dt.timedelta(seconds=start.timestamp() % dt.timedelta(days=1).total_seconds())
-        end   = start + dt.timedelta(days=90)
-
-        # TODO remove this
-        # start = start - dt.timedelta(days=90)
+        start -= dt.timedelta(seconds=start.timestamp() % dt.timedelta(days=1).total_seconds())
+        end   = start + dt.timedelta(days=app.config["NEWS_MAX_AGE"])
 
         events = sorted(defaultCal.date_search(start, end), 
                             key=lambda e: e.vobject_instance.vevent.dtstart.value)
+
         eventsDictList = []
         for e in events:
             date = e.vobject_instance.vevent.dtstart.value
             date += dt.timedelta(hours=2)
             newEventDict = { "description" : e.vobject_instance.vevent.summary.value,
-                             "time" : date.strftime("%H:%M"),
-                             "day" :   date.strftime("%d"),
-                             "month" : date.strftime("%b"),
-                             "year" :  date.strftime("%Y")                       }
+                             "time"        : date.strftime("%H:%M"),
+                             "day"         : date.strftime("%d"),
+                             "month"       : date.strftime("%b"),
+                             "year"        : date.strftime("%Y")}
             try:
                 newEventDict.update({ "location" : e.vobject_instance.vevent.location.value })
             except AttributeError:
@@ -58,18 +73,21 @@ def updateEventsFromCalDav():
             eventsDictList += [newEventDict]
     else:
         eventsDictList = []
-
-    with open("cache.json", "w") as f:
+    
+    # dump to cache file #
+    with open(CACHE_FILE, WRITE) as f:
         json.dump(eventsDictList, f)
 
 
 def getEventsCache():
-    with open("cache.json", "r") as f:
+    '''Return the cached events'''
+
+    with open(CACHE_FILE, READ) as f:
         return json.load(f)
 
 def readJsonDir(basedir):
+    '''Read a directory containing json information'''
 
-    # load json files from projects/ dir #
     jsonDictList =[]
     for root, dirs, files in os.walk(basedir):
         for filename in sorted(files):
@@ -80,14 +98,10 @@ def readJsonDir(basedir):
     return jsonDictList
 
 def parseNewsDirWithTimeout():
+    '''Parse a directory containing news-json structs and filter out
+        entries that have exceeded the max age'''
 
-    TIMEOUT_RELATIVE = "timeout-relative-weeks"
-    TIMEOUT_FIXED = "timeout-fixed"
-    PARSED_TIME = "parsed-time"
-    ACTIVE = "active"
-    DATE = "date"
-
-    news = readJsonDir(NEWS_DIR)
+    news = readJsonDir(app.config["NEWS_DIR"])
     now = dt.datetime.now()
     for n in news:
         n.update( { PARSED_TIME : dt.datetime.fromtimestamp(n[DATE]) } )
@@ -104,71 +118,70 @@ def parseNewsDirWithTimeout():
 
     return sorted(news, key=lambda n: n[PARSED_TIME], reverse=True)
 
-
 @app.route("/invalidate")
 def invalidateEventCache():
+    '''Reload the calendar events'''
+
     updateEventsFromCalDav();
-    return ("", 204)
+    return (EMPTY_STRING, 204)
 
 @app.route("/")
 def root():
-    announcements = parseNewsDirWithTimeout()
-    return flask.render_template("index.html",  mainLinks=readJsonDir(MAIN_LINKS_DIR),
-                                                siteTitle=mainConfig["siteTitle"],
-                                                conf=mainConfig,
-                                                events=getEventsCache(),
-                                                moreEvents=len(getEventsCache())>3,
-                                                vereinSections=readJsonDir(VEREIN_SECTIONS_DIR),
-                                                announcements=announcements)
+    return flask.render_template("index.html", conf=app.config,
+                                            events=getEventsCache(),
+                                            moreEvents=len(getEventsCache())>3,
+                                            sections=readJsonDir(app.config["SECTIONS_DIR"]),
+                                            announcements=parseNewsDirWithTimeout())
 
 @app.route("/impressum")
 def impressum():
-    return flask.render_template("impressum.html", conf=mainConfig)
-
-@app.route("/verein")
-def verein():
-    return flask.render_template("verein.html", conf=mainConfig)
-
-@app.route("/stammtisch")
-def stammtisch():
-    return flask.render_template("stammtisch.html", conf=mainConfig)
+    return flask.render_template("impressum.html", conf=app.config)
 
 @app.route("/people")
 def people():
-    return flask.render_template("people.html", conf=mainConfig,
+    return flask.render_template("people.html", conf=app.config,
                                                 people=readJsonDir("people/"))
 
 @app.route("/news")
 def news():
+    '''Display news-articles based on a UID-parameter'''
 
-    uid = flask.request.args.get("uid")
+    requestedId = flask.request.args.get(UID)
 
+    # load news and map UIDs #
     news = parseNewsDirWithTimeout()
     newsDict = dict()
     for n in news:
-        newsDict.update( { n["uid"] : n } )
+        newsDict.update( { n[UID] : n } )
 
-    if not uid:
-        article = sorted(news, key=lambda n: n["parsed-time"])[-1]
-    elif not newsDict[int(uid)]:
-        return ("", 404)
+    # set newest article config if there is not UID     #
+    # return 404 if the UID doesnt exist                #
+    # set article config of matching article otherwiese #
+    if not requestedId:
+        article = sorted(news, key=lambda n: n[PARSED_TIME])[-1]
+    elif not newsDict[int(requestedId)]:
+        return (EMPTY_STRING, HTTP_NOT_FOUND)
     else:
-        article = newsDict[int(uid)]
-    try:
-        with open(article["markdown-file"]) as f:
-            article.update( { "markdown-content" : markdown2.markdown(f.read()) } )
-    except FileNotFoundError as e:
-        return ("File not found Error ({})".format(e), 404)
+        article = newsDict[int(requestedId)]
 
-    return flask.render_template("news.html", conf=mainConfig, article=article)
+    # load article based on config #
+    try:
+        with open(article[MARKDOWN_FILE_KEY]) as f:
+            article.update( { MARKDOWN_CONTENT_KEY : markdown2.markdown(f.read()) } )
+    except FileNotFoundError as e:
+        return ("File not found Error ({})".format(e), HTTP_NOT_FOUND)
+
+    return flask.render_template("news.html", conf=app.config, article=article)
 
 @app.route("/static/<path:path>")
 def sendStatic(path):
-    if "pictures" in path:
-        cache_timeout = 2592000
-    else:
-        cache_timeout = None
+    cache_timeout = None
     return flask.send_from_directory('static', path, cache_timeout=cache_timeout)
+
+@app.route("/picture/<path:path>")
+def sendPicture(path):
+    cache_timeout = 2592000
+    return flask.send_from_directory(PICTURES_DIR, path, cache_timeout=cache_timeout)
 
 @app.route('/defaultFavicon.ico')
 def icon():
@@ -176,24 +189,36 @@ def icon():
 
 @app.route("/sitemap.xml")
 def siteMap():
-    urls = []
-    for rule in app.url_map.iter_rules():
-        skips = ["icon", "siteMap", "invalidate", "news"]
-        if any([s in rule.endpoint for s in skips]):
-            continue
-        if "GET" in rule.methods:
-            try:
-                url = flask.url_for(rule.endpoint, **(rule.defaults or {}))
-                priority = 0.8
-                if rule.endpoint == "root":
-                    priority = 1.0
-                urls += [(url, app.config["START_TIME"], priority)]
-            except BuildError:
-                pass
+    '''Return an XML-sitemap for SEO'''
 
+    # search for urls to add to sitemap #
+    urls = []
+
+    # iterate through all endpoints #
+    for rule in app.url_map.iter_rules():
+
+        # skip all endpoints #
+        if any([s in rule.endpoint for s in app.config["SITEMAP_IGNORE"]]):
+            continue
+        
+        # skip all non-GET endpoints #
+        if not "GET" in rule.methods:
+            continue
+
+        # get url for endpoint, get start time and set priority #
+        try:
+            url = flask.url_for(rule.endpoint, **(rule.defaults or {}))
+            priority = PRIORITY_SECONDARY
+            if rule.endpoint == "root":
+                priority = PRIORITY_PRIMARY
+            urls += [(url, app.config["START_TIME"], priority)]
+        except BuildError:
+            pass
+
+    # add news articles to sitemap #
     news = parseNewsDirWithTimeout()
     for n in filter(lambda x: x["active"], news):
-        urls += [("/news?uid={}".format(n["uid"]), n["parsed-time"], 0.8)]
+        urls += [("/news?uid={}".format(n[UID]), n[PARSED_TIME], PRIORITY_SECONDARY)]
 
     hostname = flask.request.headers.get("X-REAL-HOSTNAME")
     if not hostname:
@@ -215,32 +240,30 @@ def siteMap():
     xmlDump += et.tostring(top, encoding='UTF-8', method='xml').decode()
     return flask.Response(xmlDump, mimetype='application/xml')
 
+@app.before_first_request
+def init():
+    app.config["SECTIONS_DIR"] = os.path.join(app.config["CONTENT_DIR"], SECTIONS_DIR)
+    app.config["NEWS_DIR"]     = os.path.join(app.config["CONTENT_DIR"], NEWS_DIR)
+
+    if app.config["RELOAD_CALENDAR_ON_START"]:
+        updateEventsFromCalDav()
+    
+    app.config["START_TIME"] = dt.datetime.now()
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description='Projects Showcase',
                         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     # general parameters #
-    parser.add_argument("-i", "--interface", default="0.0.0.0", help="Interface to listen on")
-    parser.add_argument("-p", "--port", default="5000", help="Port to listen on")
-    parser.add_argument("--cal-info", help="File Containing a public calendar link")
+    parser.add_argument("-i", "--interface", default="127.0.0.1", help="Interface to listen on")
+    parser.add_argument("-p", "--port",      default="5000",      help="Port to listen on")
+    parser.add_argument("--auto-reload", action="store_const", default=False, const=True,
+                                help="Automaticly reload HTTP templates (impacts performance)")
     parser.add_argument("--no-update-on-start", action="store_const", const=True, default=False,
                                 help="Don't update the calendar on start")
 
     # startup #
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
     args = parser.parse_args()
-   
-    if args.cal_info:
-        app.config["USE_CALENDAR"] = True
-        with open(args.cal_info) as f:
-            caldavUrl, caldavUsername, caldavPassword = f.read().strip().split(",")
-    else:
-        app.config["USE_CALENDAR"] = False
-
-    if not args.no_update_on_start:
-        updateEventsFromCalDav()
-
-    app.config["START_TIME"] = dt.datetime.now()
-
+    app.config['TEMPLATES_AUTO_RELOAD'] = args.auto_reload
     app.run(host=args.interface, port=args.port)
