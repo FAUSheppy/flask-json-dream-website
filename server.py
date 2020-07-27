@@ -53,7 +53,9 @@ def updateEventsFromCalDav():
     '''Load event from a remote calendar'''
 
     if app.config["SHOW_CALENDAR"]:
-        client = caldav.DAVClient(url=caldavUrl, username=caldavUsername, password=caldavPassword)
+        client = caldav.DAVClient(url=app.config["CALENDAR_URL"],
+                                    username=app.config["CALENDAR_USERNAME"],
+                                    password=app.config["CALENDAR_PASSWORD"])
         authenticatedClient = client.principal()
         defaultCal = authenticatedClient.calendars()[0]
 
