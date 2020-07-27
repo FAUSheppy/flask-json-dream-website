@@ -21,6 +21,8 @@ SITE_AUTHOR      = "Site Author"
 SITE_LOGO_URL    = "Site Logo URL"
 SITE_BASE_URL    = "Site Base URL"
 
+WALLPAPER_URL    = "/picture/example.png"
+
 TEAMSPEAK_SERVER = "teamspeak.com"
 DISCORD_SERVER   = "https://discord.gg/",
 FACEBOOK         = "https://www.facebook.com/",
