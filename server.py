@@ -286,7 +286,7 @@ def init():
         # set custom loader to support second template dir #
         subpageContentDirTmp = os.path.join(app.config["CONTENT_DIR"], SUBPAGE_CONTENT_DIR)
         fsLoader = jinja2.FileSystemLoader([subpageContentDirTmp])
-        print(subpageContentDirTmp)
+
         choiceLoader = jinja2.ChoiceLoader([ app.jinja_loader, fsLoader])
         app.jinja_loader = choiceLoader
 
