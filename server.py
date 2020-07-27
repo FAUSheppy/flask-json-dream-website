@@ -20,6 +20,7 @@ SECTIONS_DIR   = "sections/"
 NEWS_DIR       = "news/"
 PICTURES_DIR   = "pictures/"
 MAIN_LINKS_DIR = "mainLinks/"
+PEOPLE_DIR     = "people/"
 CACHE_FILE     = "cache.json"
 
 # json config keys
@@ -156,8 +157,8 @@ def impressum():
 
 @app.route("/people")
 def people():
-    return flask.render_template("people.html", conf=app.config,
-                                                people=readJsonDir("people/"))
+    peopleDict = readJsonDir(os.path.join(app.config["CONTENT_DIR"], PEOPLE_DIR))
+    return flask.render_template("people.html", conf=app.config, people=peopleDict)
 
 @app.route("/content/")
 def content():
