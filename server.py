@@ -192,7 +192,7 @@ def news():
 
     # load article based on config #
     try:
-        with open(article[MARKDOWN_FILE_KEY]) as f:
+        with open(os.path.join(app.config["CONTENT_DIR"], article[MARKDOWN_FILE_KEY])) as f:
             article.update( { MARKDOWN_CONTENT_KEY : markdown2.markdown(f.read()) } )
     except FileNotFoundError as e:
         return ("File not found Error ({})".format(e), HTTP_NOT_FOUND)
