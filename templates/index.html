@@ -60,13 +60,13 @@
 {% endif %}
 
 <!-- twitch -->
-  {% if conf["twitch-channel"] %}
+  {% if conf["TWITCH_CHANNEL"] %}
   <div class="bg-dark pb-4">
     <div class="container pt-5 text-color-special">
 
       <div id="twitch-consent-placeholder" class="card bg-dark text-white">
          <img style="min-width: 80%; min-height: 200px;"
-            class="card-img" src="/pictures/{{ conf['twitch-placeholder-img'] }}" >
+            class="card-img" src="{{ conf['TWITCH_PLACEHOLDER_IMG'] }}" >
         <div class="card-img-overlay">
           <label class="switch mt-3 mt-0-u440">
             <input id="toogle-twitch" class="custom-control-input"
@@ -93,7 +93,7 @@
           }
 
           function createTwitchFrame(){
-	      options = { width: "100%", height: 480, channel: "{{ conf['twitch-channel'] }}" }
+	      options = { width: "100%", height: 480, channel: "{{ conf['TWITCH_CHANNEL'] }}" }
               new Twitch.Embed("twitch-embed", options);
           }
 
