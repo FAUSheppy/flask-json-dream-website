@@ -3,6 +3,7 @@ import json
 import os
 import flask
 import argparse
+import jinja2
 
 import caldav
 import datetime as dt
@@ -39,6 +40,11 @@ HTTP_NOT_FOUND = 404
 EMPTY_STRING   = ""
 READ           = "r"
 WRITE          = "w"
+
+# subpages
+IDENTIFIER_PREFIX   = "PAGE_"
+SUBPAGE_CONFIG_FILE = "subpages.json"
+SUBPAGE_CONTENT_DIR = "subpages/"
 
 app = flask.Flask("FLASK_JSON_DREAM_WEBSITE", static_folder=None)
 app.config.from_object("config")
@@ -144,6 +150,15 @@ def people():
     return flask.render_template("people.html", conf=app.config,
                                                 people=readJsonDir("people/"))
 
+@app.route("/content/")
+def content():
+    identifier = IDENTIFIER_PREFIX + flask.request.args.get("id")
+    if identifier in app.config:
+        markupText = flask.Markup(flask.render_template(app.config[identifier]))
+        return flask.render_template("default_content.html", conf=app.config, markupText=markupText)
+    else:
+        return (EMPTY_STRING, HTTP_NOT_FOUND)
+
 @app.route("/news")
 def news():
     '''Display news-articles based on a UID-parameter'''
@@ -244,6 +259,8 @@ def siteMap():
 
 @app.before_first_request
 def init():
+    '''Before first request configuration'''
+
     app.config["SECTIONS_DIR"]   = os.path.join(app.config["CONTENT_DIR"], SECTIONS_DIR)
     app.config["NEWS_DIR"]       = os.path.join(app.config["CONTENT_DIR"], NEWS_DIR)
     app.config["MAIN_LINKS_DIR"] = os.path.join(app.config["CONTENT_DIR"], MAIN_LINKS_DIR)
@@ -252,6 +269,26 @@ def init():
         updateEventsFromCalDav()
     
     app.config["START_TIME"] = dt.datetime.now()
+
+    # add additional pages if they exist #
+    subpageConfigFileTmp = os.path.join(app.config["CONTENT_DIR"], SUBPAGE_CONFIG_FILE)
+    if os.path.isfile(subpageConfigFileTmp):
+        
+        # parse subpage config file #
+        subpages = dict()
+        with open(subpageConfigFileTmp) as f:
+            subpages = json.load(f)
+
+        # set template paths for identifier in app config #
+        for identifier in subpages.keys():
+            app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]
+
+        # set custom loader to support second template dir #
+        subpageContentDirTmp = os.path.join(app.config["CONTENT_DIR"], SUBPAGE_CONTENT_DIR)
+        fsLoader = jinja2.FileSystemLoader([subpageContentDirTmp])
+        print(subpageContentDirTmp)
+        choiceLoader = jinja2.ChoiceLoader([ app.jinja_loader, fsLoader])
+        app.jinja_loader = choiceLoader
 
 if __name__ == "__main__":
 
