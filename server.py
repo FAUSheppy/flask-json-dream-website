@@ -207,7 +207,7 @@ def sendStatic(path):
 @app.route("/picture/<path:path>")
 def sendPicture(path):
     cache_timeout = 2592000
-    return flask.send_from_directory(PICTURES_DIR, path, cache_timeout=cache_timeout)
+    return flask.send_from_directory(app.config["PICTURES_DIR"], path, cache_timeout=cache_timeout)
 
 @app.route('/defaultFavicon.ico')
 def icon():
@@ -273,6 +273,7 @@ def init():
     app.config["SECTIONS_DIR"]   = os.path.join(app.config["CONTENT_DIR"], SECTIONS_DIR)
     app.config["NEWS_DIR"]       = os.path.join(app.config["CONTENT_DIR"], NEWS_DIR)
     app.config["MAIN_LINKS_DIR"] = os.path.join(app.config["CONTENT_DIR"], MAIN_LINKS_DIR)
+    app.config["PICTURES_DIR"]   = os.path.join(app.config["CONTENT_DIR"], PICTURES_DIR)
 
     if app.config["RELOAD_CALENDAR_ON_START"]:
         updateEventsFromCalDav()
