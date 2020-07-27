@@ -246,6 +246,12 @@ def siteMap():
     for n in filter(lambda x: x["active"], news):
         urls += [("/news?uid={}".format(n[UID]), n[PARSED_TIME], PRIORITY_SECONDARY)]
 
+    # add /content/ to sitemap #
+    content = filter(lambda x: x.startswith(IDENTIFIER_PREFIX), app.config.keys())
+    for c in content:
+        idWithoutPrefix = c.lstrip(IDENTIFIER_PREFIX)
+        urls += [("/content?id={}".format(idWithoutPrefix), n[PARSED_TIME], PRIORITY_PRIMARY)]
+
     hostname = flask.request.headers.get("X-REAL-HOSTNAME")
     if not hostname:
         hostname = "localhost"
