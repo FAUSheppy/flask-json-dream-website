@@ -197,7 +197,7 @@ def news():
     except FileNotFoundError as e:
         return ("File not found Error ({})".format(e), HTTP_NOT_FOUND)
 
-    return flask.render_template("news.html", conf=app.config, article=article)
+    return flask.render_template("news.html", conf=app.config, article=article, title=article["title"])
 
 @app.route("/static/<path:path>")
 def sendStatic(path):

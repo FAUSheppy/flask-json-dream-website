@@ -5,6 +5,12 @@
 <meta name="author"      content="{{ conf['SITE_AUTHOR']      }}">
 <meta name="title"       content="{{ conf['SITE_TITLE']       }}">
 
+{% if title %}
+    <title>{{ title }}</title>
+{% else %}
+    <title>{{ conf['SITE_TITLE'] }}</title>
+{% endif %}
+
 <link rel="shortcut icon" href="/defaultFavicon.ico">
 
 <!-- Bootstrap core CSS -->
