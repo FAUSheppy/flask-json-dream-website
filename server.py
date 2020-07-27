@@ -4,6 +4,7 @@ import os
 import flask
 import argparse
 import jinja2
+import sys
 
 import caldav
 import datetime as dt
@@ -11,6 +12,7 @@ import markdown2
 
 # sitemap utilities
 from werkzeug.routing import BuildError
+from werkzeug.utils   import ImportStringError
 import xml.etree.ElementTree as et
 
 # paths
@@ -47,7 +49,12 @@ SUBPAGE_CONFIG_FILE = "subpages.json"
 SUBPAGE_CONTENT_DIR = "subpages/"
 
 app = flask.Flask("FLASK_JSON_DREAM_WEBSITE", static_folder=None)
-app.config.from_object("config")
+
+try:
+    app.config.from_object("config_prod")
+except ImportStringError:
+    print("Rename example_config.py to config_prod.py!", file=sys.stderr)
+    sys.exit(1)
 
 def updateEventsFromCalDav():
     '''Load event from a remote calendar'''

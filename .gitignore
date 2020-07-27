@@ -1,5 +1,5 @@
 js/
-config.py
+config_prod.py
 content/
 __pycache__/
 css/
