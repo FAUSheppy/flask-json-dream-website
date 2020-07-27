@@ -24,10 +24,10 @@ SITE_BASE_URL    = "Site Base URL"
 WALLPAPER_URL    = "/picture/example.png"
 
 TEAMSPEAK_SERVER = "teamspeak.com"
-DISCORD_SERVER   = "https://discord.gg/",
-FACEBOOK         = "https://www.facebook.com/",
-INSTAGRAM        = "https://www.instagram.com/",
-TWITTER          = "https://twitter.com/its_a_sheppy",
+DISCORD_SERVER   = "https://discord.gg/"
+FACEBOOK         = "https://www.facebook.com/"
+INSTAGRAM        = "https://www.instagram.com/"
+TWITTER          = "https://twitter.com/its_a_sheppy"
 
-TWITCH_CHANNEL = "esports_erlangen",
+TWITCH_CHANNEL = "esports_erlangen"
 TWITCH_PLACEHOLDER_IMG = "placeholder.png"
