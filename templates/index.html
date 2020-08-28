@@ -19,8 +19,10 @@
   <div class="container h-50">
     <div class="row h-100 align-items-center">
         <div class="col-12 text-center">
-        <div style="opacity: 0;"></div>
+        <div style="opacity: 0;"></div> <!-- TODO color for text configurable -->
         <div class="mt-5" style="opacity: 0;"></div>
+        {% if "SITE_WELLCOME_TITLE" in conf %} <h1 class="font-weight-light">{{ conf["SITE_WELLCOME_TITLE"] }}</h1> {% endif %}
+        {% if "SITE_WELLCOME_SUBTITLE" in conf %} <p class="lead">{{ conf["SITE_WELLCOME_SUBTITLE"] }}</p> {% endif %}
         </div>
     </div>
   </div>

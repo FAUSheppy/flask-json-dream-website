@@ -22,6 +22,8 @@ SITE_LOGO_URL    = "Site Logo URL"
 SITE_BASE_URL    = "Site Base URL"
 
 WALLPAPER_URL    = "/picture/example.png"
+SITE_WELLCOME_TITLE = "Title on the Wallpaper"
+SITE_WELLCOME_SUBTITLE = "Subtitle on the Wallpaper"
 
 TEAMSPEAK_SERVER = "teamspeak.com"
 DISCORD_SERVER   = "https://discord.gg/"
