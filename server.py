@@ -167,7 +167,6 @@ def impressum():
     with open(impressumTextPath) as f:
         impressumText = flask.Markup(f.read())
 
-    #impressumText = flask.Markup(impressumTextPath)
     with open(impressumPath) as f:
         impressumFull = flask.render_template_string(f.read(), conf=app.config, text=impressumText)
         return flask.render_template("stub.html", content=impressumFull)
