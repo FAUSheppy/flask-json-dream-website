@@ -9,3 +9,4 @@ css/
 cache.json
 auth.txt
 *content/
+config_prod.py
