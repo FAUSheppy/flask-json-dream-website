@@ -185,7 +185,7 @@ def content():
         extraConfigDir = app.config[identifier + CONFIG_POSTFIX]
         extraConfig = None
         if extraConfigDir:
-            extraConfig = readJsonDir(os.path.join(app.config[CONTENT_DIR], extraConfigDir))
+            extraConfig = readJsonDir(os.path.join(app.config["CONTENT_DIR"], extraConfigDir))
 
         markupText = flask.Markup(flask.render_template(app.config[identifier], extraConfig=extraConfig))
         return flask.render_template("default_content.html", conf=app.config, markupText=markupText)
