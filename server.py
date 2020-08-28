@@ -115,6 +115,9 @@ def readJsonDir(basedir):
                 with open(os.path.join(basedir, filename)) as f:
                     jsonDictList += [json.load(f)]
 
+    if not jsonDictList:
+        print("Warning: {} is an empty directory".format(basedir), file=sys.stderr)
+
     return jsonDictList
 
 def parseNewsDirWithTimeout():
@@ -322,6 +325,8 @@ def init():
 
         choiceLoader = jinja2.ChoiceLoader([ app.jinja_loader, fsLoader])
         app.jinja_loader = choiceLoader
+    else:
+        print("Warning: Subpage Config File not found", file=sys.stderr)
 
 if __name__ == "__main__":
 
