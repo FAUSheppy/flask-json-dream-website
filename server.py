@@ -99,6 +99,9 @@ def updateEventsFromCalDav():
 def getEventsCache():
     '''Return the cached events'''
 
+    if not os.path.isfile(CACHE_FILE):
+        return []
+
     with open(CACHE_FILE, READ) as f:
         return json.load(f)
 
