@@ -38,18 +38,18 @@ Finally it MAY contain a text to display on the button leading to the article (o
 Obviously the markdown file referenced in the configuration must also be created.
 
 ### Other Sections
-All following sections are read and created from the *vereinSection* directory. Json configuration for these sections much contain these information. The pictures for all the sections should have a similar aspect ratio.
+All following sections are read and created from the *sections* directory. Json configuration for these sections must contain the following information. The pictures for all the sections should have a similar aspect ratios.
 
     {
         "picture" : "path to a picture for this section",
         "title" : "A title for this card",
-        "text" : "A potentially very long text of multiple lines that will be displayed next to the picture...",
+        "text" : "A potentially long text with multiple lines that will be displayed next to the picture...",
     }
 
 The configuration may contain the following information, which add a button-like link to the section.
 
     "moreInfoButtonText" : "less than 25 charaters",
-    "moreInfoButtonHref" : "href to go to"
+    "moreInfoButtonHref" : "/href/to/go/to"
 
 The alpha-numeric order of the filenames specifies the order in which the sections will be displayed on the website, so the files should be prefixed with a number, for example *10_section_hello.json* and *90_section_ending.json*.
 
@@ -66,10 +66,11 @@ To display a person on the people-subpage create a JSON-file in the *people/*-di
 The order is again specified by the alpha-numeric order of the files.
 
 # Adding new Subpages
-New subpages must be added as a new location in the *server.py* like this:
+You can add new subpages in the *content*-location via a *subpages.json* file denoting an identifier as key and a HTML-template as value, like this:
 
-    @app.route("/subpage")
-    def subpage():
-        return flask.render_template("subpage.html", conf=mainConfig)
+    {
+        "identifiert-1" : "html-template-1.html",
+        "identifiert-2" : "html-template-2.html"
+    }
 
-See the example *subpage\_example.html* in *templates/*.
+The templates referenced here must be located in a *subpages/* directory and will be made availiable at */content?id=identifier*.
