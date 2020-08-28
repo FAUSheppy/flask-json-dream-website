@@ -156,7 +156,20 @@ def root():
 
 @app.route("/impressum")
 def impressum():
-    return flask.render_template("impressum.html", conf=app.config)
+
+    impressumPath = os.path.join(app.config["CONTENT_DIR"], "impressum.html")
+    impressumTextPath = os.path.join(app.config["CONTENT_DIR"], "impressum_text.html")
+
+    impressumText = None
+    impressumFull = None
+    
+    with open(impressumTextPath) as f:
+        impressumText = flask.Markup(f.read())
+
+    #impressumText = flask.Markup(impressumTextPath)
+    with open(impressumPath) as f:
+        impressumFull = flask.render_template_string(f.read(), conf=app.config, text=impressumText)
+        return flask.render_template("stub.html", content=impressumFull)
 
 @app.route("/people")
 def people():

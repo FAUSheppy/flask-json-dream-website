@@ -73,4 +73,7 @@ You can add new subpages in the *content*-location via a *subpages.json* file de
         "identifiert-2" : "html-template-2.html"
     }
 
+# Contact Page
+Templates for the contact information and legal page can be found in the example content directory. It can be edited freely and is just a suggestion.
+
 The templates referenced here must be located in a *subpages/* directory and will be made availiable at */content?id=identifier*.
