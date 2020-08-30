@@ -22,6 +22,8 @@ SITE_LOGO_URL    = "Site Logo URL"
 SITE_BASE_URL    = "Site Base URL"
 
 WALLPAPER_URL    = "/picture/example.png"
+SITE_WELLCOME_TITLE = "Title on the Wallpaper"
+SITE_WELLCOME_SUBTITLE = "Subtitle on the Wallpaper"
 
 TEAMSPEAK_SERVER = "teamspeak.com"
 DISCORD_SERVER   = "https://discord.gg/"
@@ -31,3 +33,5 @@ TWITTER          = "https://twitter.com/its_a_sheppy"
 
 TWITCH_CHANNEL = "esports_erlangen"
 TWITCH_PLACEHOLDER_IMG = "placeholder.png"
+
+ADDITIONAL_HEADER_CONTENT = "<!-- additional content you want in <head> -->"

@@ -46,6 +46,7 @@ WRITE          = "w"
 
 # subpages
 IDENTIFIER_PREFIX   = "PAGE_"
+CONFIG_POSTFIX      = "_EXTRA_CONFIG"
 SUBPAGE_CONFIG_FILE = "subpages.json"
 SUBPAGE_CONTENT_DIR = "subpages/"
 
@@ -169,7 +170,6 @@ def impressum():
     with open(impressumTextPath) as f:
         impressumText = flask.Markup(f.read())
 
-    #impressumText = flask.Markup(impressumTextPath)
     with open(impressumPath) as f:
         impressumFull = flask.render_template_string(f.read(), conf=app.config, text=impressumText)
         return flask.render_template("stub.html", content=impressumFull)
@@ -183,7 +183,14 @@ def people():
 def content():
     identifier = IDENTIFIER_PREFIX + flask.request.args.get("id")
     if identifier in app.config:
-        markupText = flask.Markup(flask.render_template(app.config[identifier]))
+
+        # check for extra config # 
+        extraConfigDir = app.config[identifier + CONFIG_POSTFIX]
+        extraConfig = None
+        if extraConfigDir:
+            extraConfig = readJsonDir(os.path.join(app.config["CONTENT_DIR"], extraConfigDir))
+
+        markupText = flask.Markup(flask.render_template(app.config[identifier], extraConfig=extraConfig))
         return flask.render_template("default_content.html", conf=app.config, markupText=markupText)
     else:
         return (EMPTY_STRING, HTTP_NOT_FOUND)
@@ -317,7 +324,13 @@ def init():
 
         # set template paths for identifier in app config #
         for identifier in subpages.keys():
-            app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]
+            if type(subpages[identifier]) == dict:
+                app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]["template"]
+                configKey = IDENTIFIER_PREFIX + identifier + CONFIG_POSTFIX
+                app.config[configKey] = subpages[identifier]["config-dir"]
+            else:
+                app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]
+                app.config[IDENTIFIER_PREFIX + identifier + CONFIG_POSTFIX] = None
 
         # set custom loader to support second template dir #
         subpageContentDirTmp = os.path.join(app.config["CONTENT_DIR"], SUBPAGE_CONTENT_DIR)

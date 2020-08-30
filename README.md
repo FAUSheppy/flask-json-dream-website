@@ -69,8 +69,16 @@ The order is again specified by the alpha-numeric order of the files.
 You can add new subpages in the *content*-location via a *subpages.json* file denoting an identifier as key and a HTML-template as value, like this:
 
     {
-        "identifiert-1" : "html-template-1.html",
-        "identifiert-2" : "html-template-2.html"
+        "identifier-1" : "html-template-1.html",
+        "identifier-2" : "html-template-2.html"
+    }
+
+You can also give identifier complex objects pointing to another config dir which will be parsed by *readJsonDir* and passed to *render_template* as a list of dictionary objects called *"extraConfig"*:
+
+    {
+        "identifier-1" : {
+            "template" : "html-template-1.html",
+            "config-dir" : "config_dir_in_content_dir"
     }
 
 # Contact Page
