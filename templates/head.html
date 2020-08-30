@@ -28,7 +28,7 @@
 <meta property="og:url" content="{{ url_for(request.endpoint) }}" />
 <meta property="og:image" content="{{ conf['SITE_LOG_URL'] }}">
 
-{{ conf['ADDITIONAL_HEADER_CONTENT'] }}
+{{ conf['ADDITIONAL_HEADER_CONTENT'] | safe }}
 
 <script type="application/ld+json">
     {
