@@ -33,3 +33,5 @@ TWITTER          = "https://twitter.com/its_a_sheppy"
 
 TWITCH_CHANNEL = "esports_erlangen"
 TWITCH_PLACEHOLDER_IMG = "placeholder.png"
+
+ADDITIONAL_HEADER_CONTENT = "<!-- additional content you want in <head> -->"
