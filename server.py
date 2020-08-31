@@ -257,8 +257,8 @@ def generatePicture(pathToOrig, scaleX, scaleY, encoding):
     x, y = image.size
     if not scaleY:
         scaleY = y
-    scaleX = min(x, round(float(scaleX)))
-    scaleY = min(y, round(float(scaleY)))
+    scaleX = min(x, scaleX)
+    scaleY = min(y, scaleY)
 
     # generate new paths #
     newFile = "x-{x}-y-{y}-{fname}.{ext}".format(x=scaleX, y=scaleY, fname=filename, ext=encoding)
@@ -276,9 +276,12 @@ def generatePicture(pathToOrig, scaleX, scaleY, encoding):
 def sendPicture(path):
     cache_timeout = 2592000
 
-    scaleX = flask.request.args.get("scalex")
     scaleY = flask.request.args.get("scaley")
+    scaleX = flask.request.args.get("scalex")
+    if scaleY:
+        scaleY = round(float(scaleY))
     if scaleX:
+        scaleX = round(float(scaleX))
         path = generatePicture(path, scaleX, scaleY, flask.request.args.get("encoding"))
 
     raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, cache_timeout=cache_timeout)
