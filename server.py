@@ -257,8 +257,8 @@ def generatePicture(pathToOrig, scaleX, scaleY, encoding):
     x, y = image.size
     if not scaleY:
         scaleY = y
-    scaleX = min(x, int(scaleX))
-    scaleY = min(y, int(scaleY))
+    scaleX = min(x, round(float(scaleX)))
+    scaleY = min(y, round(float(scaleY)))
 
     # generate new paths #
     newFile = "x-{x}-y-{y}-{fname}.{ext}".format(x=scaleX, y=scaleY, fname=filename, ext=encoding)
