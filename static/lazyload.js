@@ -7,11 +7,11 @@ function getSize(src){
     }
 
     if(trueRes > 1920)
-        return '?scalex=640&scaley=480'
+        return '?scalex=1280&scaley=960'
     else if(trueRes <= 1920 && trueRes >= 1200)
-        return '?scalex=640&scaley=480'
+        return '?scalex=1280&scaley=960'
     else
-        return '?scalex=320&scaley=240'
+        return '?scalex=640&scaley=480'
 }
 
 /* check if browser is capable of webp */
