@@ -229,7 +229,7 @@ def news():
 
 @app.route("/static/<path:path>")
 def sendStatic(path):
-    cache_timeout = None
+    cache_timeout = 2592000
     return flask.send_from_directory('static', path, cache_timeout=cache_timeout)
 
 def generatePicture(pathToOrig, scaleX, scaleY, encoding):
