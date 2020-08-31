@@ -10,6 +10,7 @@ import caldav
 import datetime as dt
 import markdown2
 import PIL.Image
+import smtplib
 
 # sitemap utilities
 from werkzeug.routing import BuildError
@@ -394,6 +395,23 @@ def init():
         app.jinja_loader = choiceLoader
     else:
         print("Warning: Subpage Config File not found", file=sys.stderr)
+
+@app.route("/contact")
+def contact():
+    return flask.render_template("contact.html", conf=app.config)
+
+@app.route("/contact-api", methods=['POST'])
+def contactAPI():
+    
+    email = flask.request.form["email"]
+    name  = flask.request.form["name"]
+    subject = "Subject: {} ({})\n\n".format(flask.request.form["subject"], name)
+    message = subject + flask.request.form["message"]
+    smtpTarget = smtplib.SMTP(app.config["TARGET_SMTP"])
+    smtpTarget.sendmail(email, app.config["TARGET_EMAIL"] , message)
+    smtpTarget.quit()
+
+    return flask.redirect("/thanks")
 
 if __name__ == "__main__":
 
