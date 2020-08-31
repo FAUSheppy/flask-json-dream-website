@@ -12,12 +12,12 @@
   {% endif %}
 
 </head>
-<body>
+<body id="main_scrollable">
 <!-- NAVBAR -->
 {% include 'navbar.html' %}
 
 <!-- Site wellcome header -->
-<header class="masthead" style="background-image: url('{{ conf["WALLPAPER_URL"] }}');">
+<header class="masthead" realsrc='{{ conf["WALLPAPER_URL"] }}'>
   <div class="container h-50">
     <div class="row h-100 align-items-center">
         <div class="col-12 text-center">
@@ -41,7 +41,7 @@
       {% for card in mainLinks %}
       <div class="col-md-3">
         <div class="card mb-4 box-shadow border-0 hover-to-75">
-          <img class="card-img-top" src="{{ card['picture'] }}">
+          <img class="card-img-top" realsrc="{{ card['picture'] }}">
           <div class="card-img-overlay">
             <a href="{{ card['link'] }}" class="stretched-link"></a>
           </div>
@@ -70,7 +70,7 @@
 
       <div id="twitch-consent-placeholder" class="card bg-dark text-white">
          <img style="min-width: 80%; min-height: 200px;"
-            class="card-img" src="{{ conf['TWITCH_PLACEHOLDER_IMG'] }}" >
+            class="card-img" realsrc="{{ conf['TWITCH_PLACEHOLDER_IMG'] }}" >
         <div class="card-img-overlay">
           <label class="switch mt-3 mt-0-u440">
             <input id="toogle-twitch" class="custom-control-input"
@@ -117,7 +117,7 @@
     <div class="container text-color-special">
       <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>
         <div class="mt-3 col image-min-dimensions">
-          <img class="img-responsive w-100" src="{{ section['picture'] }}">
+          <img class="img-responsive w-100" realsrc="{{ section['picture'] }}">
         </div>
         <div class="mt-3 col text-min-dimensions">
           <h1>{{ section['title'] }}</h1>
