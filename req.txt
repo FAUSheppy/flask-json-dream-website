@@ -1,3 +1,5 @@
 flask
 caldav
 markdown2
+smtplib
+pillow
