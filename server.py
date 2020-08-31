@@ -9,6 +9,7 @@ import sys
 import caldav
 import datetime as dt
 import markdown2
+import PIL.Image
 
 # sitemap utilities
 from werkzeug.routing import BuildError
@@ -231,10 +232,60 @@ def sendStatic(path):
     cache_timeout = None
     return flask.send_from_directory('static', path, cache_timeout=cache_timeout)
 
+def generatePicture(pathToOrig, scaleX, scaleY, encoding):
+    '''Generate an pictures with the requested scales and encoding if it doesn't already exist'''
+
+    CACHE_DIR = os.path.join(app.config["PICTURES_DIR"], "cache/")
+
+    if os.path.isfile(CACHE_DIR):
+        raise OSError("Picture cache dir is occupied by a file!")
+    if not os.path.isdir(CACHE_DIR):
+        os.mkdir(CACHE_DIR)
+
+    filename, extension = os.path.splitext(os.path.basename(pathToOrig))
+    if not encoding:
+        encoding = extension.strip(".")
+
+    # just python things... #
+    if encoding.lower() == "jpg":
+        encoding = "jpeg"
+
+    # open image #
+    image = PIL.Image.open(os.path.join(app.config["PICTURES_DIR"], pathToOrig))
+
+    # ensure sizes are valid #
+    x, y = image.size
+    if not scaleY:
+        scaleY = y
+    scaleX = min(x, int(scaleX))
+    scaleY = min(y, int(scaleY))
+
+    # generate new paths #
+    newFile = "x-{x}-y-{y}-{fname}.{ext}".format(x=scaleX, y=scaleY, fname=filename, ext=encoding)
+    newPath = os.path.join(CACHE_DIR, newFile)
+
+    # save image with new size and encoding #
+    image.thumbnail((scaleX, scaleY), PIL.Image.ANTIALIAS)
+    image.save(newPath, encoding)
+
+    # strip the STATIC_DIR because we will use send_from_directory for safety #
+    REPLACE_ONCE = 1
+    return newPath.replace(app.config["PICTURES_DIR"], "", REPLACE_ONCE)
+
 @app.route("/picture/<path:path>")
 def sendPicture(path):
     cache_timeout = 2592000
-    return flask.send_from_directory(app.config["PICTURES_DIR"], path, cache_timeout=cache_timeout)
+
+    scaleX = flask.request.args.get("scalex")
+    scaleY = flask.request.args.get("scaley")
+    if scaleX:
+        path = generatePicture(path, scaleX, scaleY, flask.request.args.get("encoding"))
+
+    raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, cache_timeout=cache_timeout)
+    response = flask.make_response(raw)
+    response.headers['X-ATHQ-INTERNAL-FID'] = path
+
+    return response
 
 @app.route('/defaultFavicon.ico')
 def icon():

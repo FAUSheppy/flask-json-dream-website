@@ -41,7 +41,6 @@ function changeSrc(offset){
     var cur_viewbox = -document.getElementById("navbar-ph").getBoundingClientRect().y
     if(cur_viewbox - viewbox_y < 100){
         return;
-
     }
 
     /* cache viewbox */
