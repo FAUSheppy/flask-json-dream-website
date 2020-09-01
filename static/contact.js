@@ -1,4 +1,4 @@
-function submitForm(){
+function submitContactForm(){
 
     /* show the waiting dialog */
     dialog = document.getElementById("waiting-dialog")
@@ -7,23 +7,17 @@ function submitForm(){
 
     /* submit the form */
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "/your/url/name.php"); 
-    xhr.onload = 
+    xhr.open("POST", "/contact-api"); 
+    xhr.onload = formSubmitFinished
     formData = new FormData(document.getElementById("contact-form")); 
     xhr.send(formData);
-
-    mainContainer = document.getElementById("main-container")
-    mainContainer.style.opacity = 0.5
-
-    window.location.href = "/thanks"
-    // after x seconds forward to thx
 
 }
 
 function formSubmitFinished(event){ 
     if(event.target.status != 200){
-        showErrorMessage(); // blocking
-        setMainBackgroundOpacity(0.5)
+        showErrorMessage(event.target); // blocking
+        setMainBackgroundOpacity(1)
     }else{
         window.location.href = "/thanks"
     }
@@ -32,4 +26,9 @@ function formSubmitFinished(event){
 function setMainBackgroundOpacity(opacity){
     mainContainer = document.getElementById("main-container")
     mainContainer.style.opacity = opacity
+}
+
+function showErrorMessage(target){
+    console.log(target)
+    alert("Error: " + target.statusText)
 }

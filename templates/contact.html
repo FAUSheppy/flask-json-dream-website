@@ -8,20 +8,22 @@
   <!-- Bootstrap core CSS -->
   {% include 'head.html' %}
 
+  <script src="/static/contact.js"></script>
+
 </head>
 
 <body>
   {% include 'navbar.html' %}
   {% include 'progress_window.html' %}
-  <div class="container" style="margin-top: 4vw;">
+  <div id="main-container" class="container" style="margin-top: 4vw;">
     <section class="mb-4">
       <h2 class="h1-responsive font-weight-bold text-center my-4">{{ conf['CONTACT_HEADLINE'] }}
       </h2>
       <p class="text-center w-responsive mx-auto mb-5"> </p>
         <div class="row">
        <div class="col-md-9 mb-md-0 mb-5">
-       <form id="contact-form" name="contact-form" 
-                action="contact-api" method="POST" enctype='application/json'>
+          <form id="contact-form" name="contact-form">
+          <!-- action="contact-api" method="POST" enctype='application/json'> -->
             <div class="row">
               <div class="col-md-6">
                 <div class="md-form mb-0">
@@ -57,7 +59,7 @@
             </div>
        </form>
        <div class="text-center text-md-left mt-2">
-         <a class="btn btn-primary" onclick="document.getElementById('contact-form').submit();">Send</a>
+         <a class="btn btn-primary" onclick="submitContactForm()">Send</a>
        </div>
        <div class="status"></div>
        </div>
