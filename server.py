@@ -16,6 +16,9 @@ from werkzeug.routing import BuildError
 from werkzeug.utils   import ImportStringError
 import xml.etree.ElementTree as et
 
+# import project files
+import smtp
+
 # paths
 SECTIONS_DIR   = "sections/"
 NEWS_DIR       = "news/"
