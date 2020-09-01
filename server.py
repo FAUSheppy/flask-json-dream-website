@@ -10,7 +10,6 @@ import caldav
 import datetime as dt
 import markdown2
 import PIL.Image
-import smtplib
 
 # sitemap utilities
 from werkzeug.routing import BuildError
@@ -42,6 +41,7 @@ PRIORITY_SECONDARY = 0.8
 
 # other
 HTTP_NOT_FOUND = 404
+HTTP_NO_CONTENT = 204
 EMPTY_STRING   = ""
 READ           = "r"
 WRITE          = "w"
@@ -408,22 +408,20 @@ def init():
     else:
         print("Warning: Subpage Config File not found", file=sys.stderr)
 
+    ## check if SMTP server is availiable ##
+    smtp.checkSMTPConnection(app)
+
+
 @app.route("/contact")
 def contact():
     return flask.render_template("contact.html", conf=app.config)
 
 @app.route("/contact-api", methods=['POST'])
 def contactAPI():
-    
-    email = flask.request.form["email"]
-    name  = flask.request.form["name"]
-    subject = "Subject: {} ({})\n\n".format(flask.request.form["subject"], name)
-    message = subject + flask.request.form["message"]
-    smtpTarget = smtplib.SMTP(app.config["TARGET_SMTP"])
-    smtpTarget.sendmail(email, app.config["TARGET_EMAIL"] , message)
-    smtpTarget.quit()
+    '''Form Location for Contact Form to be submitted to target email'''
 
-    return flask.redirect("/thanks")
+    smtp.sendMailFromHtmlForm(app, flask.request.form)
+    return (EMPTY_STRING, HTTP_NO_CONTENT)
 
 if __name__ == "__main__":
 
