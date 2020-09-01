@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	{% include 'head.html' %}
+
+</head>
+
+<body>
+	{% include 'navbar.html' %}
+  <div class="jumbotron text-center">
+    <h1 class="display-3">{{ conf['THANKS_TITLE'] }}</h1>
+    <p class="lead">
+        <strong>{{ conf['THANKS_STRONG_TEXT'] }}</strong>
+        {{ conf['THANKS_TEXT'] }}
+    </p>
+    <hr>
+    <p>
+      Still having trouble? <a href="/contact">Contact us</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="/" role="button">Return to Homepage</a>
+    </p>
+  </div>
+</body>
+
+</html>

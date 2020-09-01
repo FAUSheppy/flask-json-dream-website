@@ -176,6 +176,18 @@ def impressum():
         impressumFull = flask.render_template_string(f.read(), conf=app.config, text=impressumText)
         return flask.render_template("stub.html", content=impressumFull)
 
+@app.route("/thanks")
+def thanks():
+    '''Page to be displayed after successfully submitting a contact form'''
+
+    thanksTemplatePath = os.path.join(app.config["CONTENT_DIR"], "thanks.html")
+    thanksTemplate = None
+
+    with open(thanksTemplatePath) as f:
+        thanksTemplate = flask.Markup(flask.render_template_string(f.read(), conf=app.config))
+
+    return flask.render_template("stub.html", content=thanksTemplate)
+
 @app.route("/people")
 def people():
     peopleDict = readJsonDir(os.path.join(app.config["CONTENT_DIR"], PEOPLE_DIR))

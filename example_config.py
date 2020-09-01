@@ -47,3 +47,7 @@ TARGET_SMTP=None
 TARGET_EMAIL=None
 TARGET_SMTP_USER=None
 TARGET_SMTP_AUTH=None
+
+THANKS_TITLE = "Thank you for something!"
+THANKS_STRONG_TEXT = "Strong Text"
+TANKS_TEXT = "Normal Text"
