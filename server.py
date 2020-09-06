@@ -187,7 +187,8 @@ def thanks():
     thanksTemplate = None
 
     with open(thanksTemplatePath) as f:
-        thanksTemplate = flask.Markup(flask.render_template_string(f.read(), conf=app.config))
+        thanksTemplate = flask.Markup(flask.render_template_string(f.read(), conf=app.config,
+                                                                    footerFixBottom=True))
 
     return flask.render_template("stub.html", content=thanksTemplate)
 
