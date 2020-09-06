@@ -51,4 +51,4 @@ SMTP_MUST_BE_CONNECTED = False
 
 THANKS_TITLE = "Thank you for something!"
 THANKS_STRONG_TEXT = "Strong Text"
-TANKS_TEXT = "Normal Text"
+THANKS_TEXT = "Normal Text"
