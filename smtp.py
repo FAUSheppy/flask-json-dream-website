@@ -11,7 +11,7 @@ def checkSMTPConnection(app):
         if app.config["TARGET_SMTP_USER"] and app.config["TARGET_SMTP_PASSWORD"]:
             smtp.login(app.config["TARGET_SMTP_USER"], app.config["TARGET_SMTP_PASSWORD"])
         smtpTarget.quit()
-    except smtplib.SMTPException as e:
+    except (smtplib.SMTPException, ConnectionRefusedError) as e:
         if app.config["SMTP_MUST_BE_CONNECTED"]:
             print(e, file=sys.stderr)
             sys.exit(1)
