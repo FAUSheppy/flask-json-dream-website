@@ -15,7 +15,7 @@ function submitContactForm(){
 }
 
 function formSubmitFinished(event){ 
-    if(event.target.status != 200){
+    if(event.target.status < 200 || event.target.status >= 300){
         showErrorMessage(event.target); // blocking
         setMainBackgroundOpacity(1)
     }else{
