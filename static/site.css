@@ -4,7 +4,7 @@ html {
 }
 
 .masthead {
-  height: 50vh;
+  /*height: 50vh; */
   min-height: 250px;
   background-size: cover;
   background-position: center;

@@ -24,6 +24,9 @@ SITE_BASE_URL    = "Site Base URL"
 WALLPAPER_URL    = "/picture/example.png"
 SITE_WELLCOME_TITLE = "Title on the Wallpaper"
 SITE_WELLCOME_SUBTITLE = "Subtitle on the Wallpaper"
+SITE_WELLCOME_TITLE_CSS = "color: green; font-size: 4vw;"
+
+NO_CENTER_TITLE = False
 
 TEAMSPEAK_SERVER = "teamspeak.com"
 DISCORD_SERVER   = "https://discord.gg/"
@@ -52,3 +55,5 @@ SMTP_MUST_BE_CONNECTED = False
 THANKS_TITLE = "Thank you for something!"
 THANKS_STRONG_TEXT = "Strong Text"
 THANKS_TEXT = "Normal Text"
+
+DISABLE_MAIN_LINKS = False
