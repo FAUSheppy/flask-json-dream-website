@@ -156,12 +156,14 @@ def invalidateEventCache():
 
 @app.route("/")
 def root():
+    navbarLinks = [("test", "contact"),("test", "contact"),("test", "contact"),("test", "contact")]
     return flask.render_template("index.html", conf=app.config,
                                             mainLinks=readJsonDir(app.config["MAIN_LINKS_DIR"]),
                                             events=getEventsCache(),
                                             moreEvents=len(getEventsCache())>3,
                                             sections=readJsonDir(app.config["SECTIONS_DIR"]),
-                                            announcements=parseNewsDirWithTimeout())
+                                            announcements=parseNewsDirWithTimeout(),
+                                            navbarLinks=navbarLinks)
 
 @app.route("/impressum")
 def impressum():

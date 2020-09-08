@@ -11,13 +11,19 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbar">
-      
+
       <!-- left side -->
       <ul class="navbar-nav mr-auto">
 
         <li class="nav-item">
           <a class="nav-link" href="/">Home</a>
         </li>
+
+        {% for nl in conf["NAVBAR_LINKS"] %}
+        <li class="nav-item">
+            <a class=nav-link href="{{ nl[1] }}">{{ nl[0] }}</a>
+        </li>
+        {% endfor %}
 
         {% if conf["TEAMSPEAK_SERVER"] %}
         <li class="nav-item right">
