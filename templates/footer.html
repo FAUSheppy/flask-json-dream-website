@@ -1,3 +1,8 @@
 <div class="footer-copyright {% if footerFixBottom %} fixed-bottom {% endif %}text-center py-3 bg-dark" style="position: relative; bottom: 0;">
-      <a style="color: rgba(255,255,255,.5);" href="/impressum">Impressum/Kontakt</a>
+      {% if conf["IMPRESSUM_IS_CONTACT"] %}
+         <a style="color: rgba(255,255,255,.5);" href="/impressum">Impressum/Kontakt</a>
+      {% else %}
+         <a class="mr-2" style="color: rgba(255,255,255,.5);" href="/impressum">Impressum</a>
+         <a class="ml-2" style="color: rgba(255,255,255,.5);" href="/contact">Kontakt</a>
+      {% endif %}
 </div>

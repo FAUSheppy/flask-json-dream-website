@@ -59,3 +59,4 @@ THANKS_TEXT = "Normal Text"
 DISABLE_MAIN_LINKS = False
 
 NAVBAR_LINKS = [ ("Navbar-Item1", "/target"), ("Navbar-Item2", "/target2") ]
+IMPRESSUM_IS_CONTACT = True
