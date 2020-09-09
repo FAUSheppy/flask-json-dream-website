@@ -205,10 +205,17 @@ def content():
         # check for extra config # 
         extraConfigDir = app.config[identifier + CONFIG_POSTFIX]
         extraConfig = None
+        markupText  = None
         if extraConfigDir:
-            extraConfig = readJsonDir(os.path.join(app.config["CONTENT_DIR"], extraConfigDir))
+            fullpath = os.path.join(app.config["CONTENT_DIR"], extraConfigDir)
+            if os.path.isdir(fullpath):
+                extraConfig = readJsonDir(fullpath)
+                markupText = flask.Markup(flask.render_template(app.config[identifier],
+                                    extraConfig=extraConfig))
+            else:
+                with open(fullpath) as f:
+                    markupText = markdown2.markdown(f.read())
 
-        markupText = flask.Markup(flask.render_template(app.config[identifier], extraConfig=extraConfig))
         return flask.render_template("default_content.html", conf=app.config, markupText=markupText)
     else:
         return (EMPTY_STRING, HTTP_NOT_FOUND)
@@ -398,7 +405,10 @@ def init():
             if type(subpages[identifier]) == dict:
                 app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]["template"]
                 configKey = IDENTIFIER_PREFIX + identifier + CONFIG_POSTFIX
-                app.config[configKey] = subpages[identifier]["config-dir"]
+                if "config-dir" in subpages[identifier]:
+                    app.config[configKey] = subpages[identifier]["config-dir"]
+                else:
+                    app.config[configKey] = subpages[identifier]["markdown"]
             else:
                 app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]
                 app.config[IDENTIFIER_PREFIX + identifier + CONFIG_POSTFIX] = None

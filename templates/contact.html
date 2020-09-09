@@ -15,67 +15,69 @@
 <body>
   {% include 'navbar.html' %}
   {% include 'progress_window.html' %}
-  <div id="main-container" class="container" style="margin-top: 4vw;">
-    <section class="mb-4">
-      <h2 class="h1-responsive font-weight-bold text-center my-4">{{ conf['CONTACT_HEADLINE'] }}
-      </h2>
-      <p class="text-center w-responsive mx-auto mb-5"> </p>
-        <div class="row">
-       <div class="col-md-9 mb-md-0 mb-5">
-          <form id="contact-form" name="contact-form">
-          <!-- action="contact-api" method="POST" enctype='application/json'> -->
-            <div class="row">
-              <div class="col-md-6">
+    <div id="main-container" class="container" style="margin-top: 4vw;">
+      <section class="mb-4">
+        <h2 class="h1-responsive font-weight-bold my-4">{{ conf['CONTACT_HEADLINE'] }}
+        </h2>
+        <p class="text-center w-responsive mx-auto mb-5"> </p>
+          <div class="row">
+         <div class="col-md-9 mb-md-0 mb-5">
+            <form id="contact-form" name="contact-form">
+            <!-- action="contact-api" method="POST" enctype='application/json'> -->
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                            <input placeholder="{{ conf['CONTACT_PLACEHOLDER_NAME'] }}"
+                                    type="text" id="name" name="name" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="md-form mb-0">
+                  <input type="text" id="email" name="email" class="form-control"
+                                    placeholder="{{ conf['CONTACT_PLACEHOLDER_EMAIL'] }}">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-2">
+                <div class="col-md-12">
                 <div class="md-form mb-0">
-                          <input placeholder="{{ conf['CONTACT_PLACEHOLDER_NAME'] }}"
-                                  type="text" id="name" name="name" class="form-control">
+                  <input type="text" id="subject" name="subject" class="form-control"
+                                    placeholder="{{ conf['CONTACT_PLACEHOLDER_SUBJECT'] }}">
+                  </div>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="md-form mb-0">
-                <input type="text" id="email" name="email" class="form-control"
-                                  placeholder="{{ conf['CONTACT_PLACEHOLDER_EMAIL'] }}">
+
+              <div class="row mt-2">
+                <div class="col-md-12">
+                  <div class="md-form">
+                  <textarea type="text" id="message" name="message" rows="2"
+                                    placeholder="{{ conf['CONTACT_PLACEHOLDER_TEXTAREA'] }}"
+                      class="form-control md-textarea"></textarea>
+                </div>
                 </div>
               </div>
-            </div>
+         </form>
+         <div class="text-center text-md-left mt-2">
+           <a class="btn btn-primary" onclick="submitContactForm()">Send</a>
+         </div>
+         <div class="status"></div>
+         </div>
 
-            <div class="row mt-2">
-              <div class="col-md-12">
-              <div class="md-form mb-0">
-                <input type="text" id="subject" name="subject" class="form-control"
-                                  placeholder="{{ conf['CONTACT_PLACEHOLDER_SUBJECT'] }}">
-                </div>
-              </div>
-            </div>
-
-            <div class="row mt-2">
-              <div class="col-md-12">
-                <div class="md-form">
-                <textarea type="text" id="message" name="message" rows="2"
-                                  placeholder="{{ conf['CONTACT_PLACEHOLDER_TEXTAREA'] }}"
-                    class="form-control md-textarea"></textarea>
-              </div>
-              </div>
-            </div>
-       </form>
-       <div class="text-center text-md-left mt-2">
-         <a class="btn btn-primary" onclick="submitContactForm()">Send</a>
-       </div>
-       <div class="status"></div>
-       </div>
-
-        <!--
-        <div class="col-md-3 text-center">
-          <ul class="list-unstyled mb-0">
-            <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-              <p>rejectmail@atlantishq.de</p>
-            </li>
-          </ul>
+          <div class="border p-3 col-md-3 text-center">
+            <ul class="list-unstyled mb-0">
+              <li><i class="fas fa-envelope mt-4 fa-2x"></i>
+                <p>Wir freuen uns auf ihre Nachricht!</p></br>
+                {% if conf['CONTACT_EMAIL'] %}
+                <p>Selbsverständlich können sie uns auch per Mail kontaktieren.</p></br>
+                <a href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
+                {% endif %}
+              </li>
+            </ul>
+          </div>
         </div>
-        -->
-      </div>
 
-    </section>
-  </div>
+      </section>
+    </div>
 </body>
 </html>
