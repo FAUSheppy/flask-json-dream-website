@@ -1,8 +1,9 @@
 /* determine which size of image to load */
 function getSize(src){
-    var trueRes = screen.width/window.devicePixelRatio
+    var trueRes = screen.width/Math.min(window.devicePixelRatio, 4)
 
     if(src.indexOf("scale_fullscreen") > -1 || src.indexOf("wallpaper") > -1 ){
+        trueRes = Math.max(trueRes, 800)
         return '?scalex=' + trueRes
     }
 
