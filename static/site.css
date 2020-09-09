@@ -12,9 +12,28 @@ body {
     }
 }
 
+.title-responsive{
+    font-size: 25px !important;
+    padding-left: 40px;
+}
+
+@media (max-width: 1300px) {
+    .title-responsive{
+        font-size: 20px !important;
+        padding-left: unset;
+    }
+}
+
+@media (max-width: 900px) {
+    .title-responsive{
+        font-size: 2.2vw !important;
+        padding-left: unset;
+    }
+}
+
 .masthead {
   /*height: 50vh; */
-  min-height: 250px;
+  /* min-height: 250px; */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
