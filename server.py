@@ -200,6 +200,7 @@ def people():
 @app.route("/content/")
 def content():
     identifier = IDENTIFIER_PREFIX + flask.request.args.get("id")
+    container=False
     if identifier in app.config:
 
         # check for extra config # 
@@ -215,8 +216,10 @@ def content():
             else:
                 with open(fullpath) as f:
                     markupText = markdown2.markdown(f.read())
+                    container = True
 
-        return flask.render_template("default_content.html", conf=app.config, markupText=markupText)
+        return flask.render_template("default_content.html", container=container,
+                                        conf=app.config, markupText=markupText)
     else:
         return (EMPTY_STRING, HTTP_NOT_FOUND)
 

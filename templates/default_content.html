@@ -6,8 +6,10 @@
 
 </head>
 <body class="bg-special">
-
 	{% include 'navbar.html' %}
+    {% if not container %}
+    {{ markupText | safe }}
+    {% else %}
 	<div class="container mt-5 mb-5 h-100">
 		<div class="row impressum mt-5"></div>
 			<div class="col-lg-12">
@@ -16,7 +18,8 @@
 		  	</div>
 		</div>
 	</div>
-	{% include 'footer.html' %}
+    {% endif %}
 
+	{% include 'footer.html' %}
 </body>
 </html>
