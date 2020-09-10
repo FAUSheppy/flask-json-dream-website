@@ -76,11 +76,11 @@
                 {% if PGP_KEY %}
                 <script>
                     function copyPGP(){
-                        navigator.clipboard.writeText("{{ PGP_KEY }}")
+                        navigator.clipboard.writeText("{{ PGP_KEY | replace('\n', '\\n') }}")
                         cur =  document.getElementById("pgp").innerHTML
                         document.getElementById("pgp").innerHTML = "Kopiert!"
                         setTimeout(() => { 
-                                document.getElementById("pgp").innerHTML = "PGP Key" }, 2000);
+                                document.getElementById("pgp").innerHTML = "PGP Key" }, 500);
                     }
                 </script>
                 <style>
