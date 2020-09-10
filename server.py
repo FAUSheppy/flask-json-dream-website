@@ -319,7 +319,7 @@ def sendPicture(path):
 
 @app.route('/defaultFavicon.ico')
 def icon():
-    return flask.send_from_directory('static', 'defaultFavicon.ico')
+    return flask.send_from_directory(app.config["CONTENT_DIR"], 'defaultFavicon.ico')
 
 @app.route('/robots.txt')
 def robots():
