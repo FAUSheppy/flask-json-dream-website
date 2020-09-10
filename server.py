@@ -431,7 +431,11 @@ def init():
 
 @app.route("/contact")
 def contact():
-    return flask.render_template("contact.html", conf=app.config)
+    key=None
+    if app.config['PGP_PUB_KEY_FILE']:
+        with open(os.path.join(app.config["CONTENT_DIR"], app.config['PGP_PUB_KEY_FILE'])) as f:
+            key = f.read().strip()
+    return flask.render_template("contact.html", conf=app.config, PGP_KEY=key)
 
 @app.route("/contact-api", methods=['POST'])
 def contactAPI():

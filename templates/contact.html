@@ -12,7 +12,7 @@
 
 </head>
 
-<body>
+<body class="bg-secondary">
   {% include 'navbar.html' %}
   {% include 'progress_window.html' %}
     <div id="main-container" class="container" style="margin-top: 4vw;">
@@ -25,13 +25,13 @@
             <form id="contact-form" name="contact-form">
             <!-- action="contact-api" method="POST" enctype='application/json'> -->
               <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                   <div class="md-form mb-0">
                             <input placeholder="{{ conf['CONTACT_PLACEHOLDER_NAME'] }}"
                                     type="text" id="name" name="name" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                   <div class="md-form mb-0">
                   <input type="text" id="email" name="email" class="form-control"
                                     placeholder="{{ conf['CONTACT_PLACEHOLDER_EMAIL'] }}">
@@ -51,26 +51,45 @@
               <div class="row mt-2">
                 <div class="col-md-12">
                   <div class="md-form">
-                  <textarea type="text" id="message" name="message" rows="2"
+                  <textarea type="text" id="message" name="message" rows="10"
                                     placeholder="{{ conf['CONTACT_PLACEHOLDER_TEXTAREA'] }}"
                       class="form-control md-textarea"></textarea>
                 </div>
                 </div>
               </div>
          </form>
-         <div class="text-center text-md-left mt-2">
-           <a class="btn btn-primary" onclick="submitContactForm()">Send</a>
+         <div class="text-center text-md-left mt-4">
+           <a class="btn btn-light w-50" onclick="submitContactForm()">Absenden</a>
          </div>
          <div class="status"></div>
          </div>
 
-          <div class="border p-3 col-md-3 text-center">
+          <div class="border p-3 col-md-3 text-center bg-special">
             <ul class="list-unstyled mb-0">
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
                 <p>Wir freuen uns auf ihre Nachricht!</p></br>
                 {% if conf['CONTACT_EMAIL'] %}
                 <p>Selbsverständlich können sie uns auch per Mail kontaktieren.</p></br>
-                <a href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
+                <a type="button" class="btn btn-light p-3 w-75" 
+                        href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
+                {% endif %}
+                {% if PGP_KEY %}
+                <script>
+                    function copyPGP(){
+                        navigator.clipboard.writeText("{{ PGP_KEY }}")
+                        cur =  document.getElementById("pgp").innerHTML
+                        document.getElementById("pgp").innerHTML = "Kopiert!"
+                        setTimeout(() => { 
+                                document.getElementById("pgp").innerHTML = "PGP Key" }, 2000);
+                    }
+                </script>
+                <style>
+                    .pgp{
+                         
+                    }
+                </style>
+                <a id="pgp" onclick="copyPGP()" type="button"
+                        class="pgp btn btn-light p-3 mt-3 w-75">PGP Key</a>
                 {% endif %}
               </li>
             </ul>
