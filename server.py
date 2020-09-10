@@ -321,6 +321,10 @@ def sendPicture(path):
 def icon():
     return flask.send_from_directory('static', 'defaultFavicon.ico')
 
+@app.route('/robots.txt')
+def robots():
+    return flask.send_from_directory(app.config["CONTENT_DIR"], 'robots.txt')
+
 @app.route("/sitemap.xml")
 def siteMap():
     '''Return an XML-sitemap for SEO'''
@@ -356,9 +360,11 @@ def siteMap():
 
     # add /content/ to sitemap #
     content = filter(lambda x: x.startswith(IDENTIFIER_PREFIX), app.config.keys())
-    for c in content:
+    uniqueContent = filter(lambda x: not x.endswith(CONFIG_POSTFIX), content)
+    for c in uniqueContent:
         idWithoutPrefix = c.lstrip(IDENTIFIER_PREFIX)
-        urls += [("/content?id={}".format(idWithoutPrefix), n[PARSED_TIME], PRIORITY_PRIMARY)]
+        urls += [("/content?id={}".format(idWithoutPrefix), app.config["START_TIME"],
+                                                                        PRIORITY_PRIMARY)]
 
     hostname = flask.request.headers.get("X-REAL-HOSTNAME")
     if not hostname:
