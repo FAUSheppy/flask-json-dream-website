@@ -67,9 +67,10 @@
           <div class="border p-3 col-md-3 text-center bg-special">
             <ul class="list-unstyled mb-0">
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                <p>Wir freuen uns auf ihre Nachricht!</p></br>
+                <p>Wir freuen uns auf Ihre Nachricht!</p>
                 {% if conf['CONTACT_EMAIL'] %}
-                <p>Selbsverständlich können sie uns auch per Mail kontaktieren.</p></br>
+                <hr>
+                <p>Natürlich können Sie uns auch direkt per Mail kontaktieren.</p></br>
                 <a type="button" class="btn btn-light p-3 w-75" 
                         href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
                 {% endif %}

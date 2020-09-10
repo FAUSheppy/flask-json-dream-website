@@ -1,5 +1,19 @@
 function submitContactForm(){
 
+    /* check input fields */
+    mailField = document.getElementById("email")
+    messageField = document.getElementById("message")
+
+    if(mailField.value == ""){
+        alert("Bitte geben Sie einen Kontakt an unter dem wir Sie erreichen können!")
+        return
+    }
+
+    if(messageField.value == ""){
+        alert("Nachricht ist leer!")
+        return
+    }
+
     /* show the waiting dialog */
     dialog = document.getElementById("waiting-dialog")
     dialog.style.disply = "block"
