@@ -12,6 +12,12 @@ body {
     }
 }
 
+@media (max-width: 500px) {
+    body {
+        font-size: 5vw;
+    }
+}
+
 .title-responsive{
     font-size: 25px !important;
     padding-left: 40px;
