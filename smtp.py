@@ -1,5 +1,6 @@
 import sys
 import smtplib
+import email.message
 
 def checkSMTPConnection(app):
     '''Check connection and login on SMTP server configured in app config'''
@@ -21,13 +22,21 @@ def checkSMTPConnection(app):
 def sendMailFromHtmlForm(app, htmlForm):
     '''Take the app config and the contact HTML-form and send a mail accordingly'''
 
-    email   = htmlForm["email"]
+    contact = htmlForm["email"]
     name    = htmlForm["name"]
     message = htmlForm["message"]
+    message += "\nKontakt: " + contact
     subject = htmlForm["subject"]
+    #subject = "Subject: {} ({})\n\n".format(subject, name)
 
-    subject = "Subject: {} ({})\n\n".format(subject, name)
+    messageBuilder = email.message.EmailMessage()
+    messageBuilder.set_content(message)
+    messageBuilder["Subject"] = subject
+    messageBuilder["From"] = "localhost"
+    messageBuilder["To"] = app.config["TARGET_EMAIL"]
+
 
     smtpTarget = smtplib.SMTP(app.config["TARGET_SMTP"])
-    smtpTarget.sendmail(email, app.config["TARGET_EMAIL"] , message)
+    #smtpTarget.sendmail(email, app.config["TARGET_EMAIL"] , message)
+    smtpTarget.send_message(messageBuilder)
     smtpTarget.quit()
