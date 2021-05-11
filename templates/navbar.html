@@ -15,6 +15,24 @@
           <a class="nav-link" href="/">Home</a>
         </li>
 
+        {% for ndl in conf["NAVBAR_DROPDOWN_LINKS"] %}
+	        <li class="nav-item nav-link dropdown">
+	        	<button class="dropdown-toggle" type="button"
+	        	  style="background: rgba(0,0,0,0);color: azure !important;border: rgba(0,0,0,0);"
+	        	  id="dropdown-{{ ndl['name'] }}" data-toggle="dropdown"
+	        	  aria-haspopup="true" aria-expanded="false">
+	        	{{ ndl["name"] }}
+	          </button>
+	          <div class="dropdown-menu mt-0 bg-dark" aria-labelledby="dropdown-{{ ndl['name'] }}">
+                      {% for link in ndl["links"] %}
+	              <a class="dropdown-item nav-link hover-to-75" href="{{ link['href'] }}">
+                          {{ link["name"] }}
+                  </a>
+	              {% endfor %}
+	          </div>
+	        </li>
+        {% endfor %}
+
         {% for nl in conf["NAVBAR_LINKS"] %}
         <li class="nav-item">
             <a class=nav-link href="{{ nl[1] }}">{{ nl[0] }}</a>
