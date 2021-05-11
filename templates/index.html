@@ -17,17 +17,19 @@
 {% include 'navbar.html' %}
 
 <!-- Site wellcome header -->
-<header class="masthead {% if conf['NO_CENTER_TITLE'] %} h-50 {% endif %}"
-        style="background-size: unset; background-position: right;
-                padding: 30px"
-        {% if conf['WALLPAPER_URL'] %} realsrc='{{ conf["WALLPAPER_URL"] }}' {% endif %}>
-  <div class="{% if conf['NO_CENTER_TITLE'] %} pb-4 pl-2 pr-2 {% else %} container {% endif %} 
-              {% if conf['WALLPAPER_URL'] %} h-50 {% endif %}">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 {% if not conf['NO_CENTER_TITLE'] %} text-center {% endif %}">
-        <div style="opacity: 0;"></div> <!-- TODO color for text configurable -->
-        {% if "SITE_WELLCOME_TITLE" in conf %} <h1 class="pt-4 title-responsive font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_TITLE"] | safe }}</h1> {% endif %}
-        {% if "SITE_WELLCOME_SUBTITLE" in conf %} <p class="lead">{{ conf["SITE_WELLCOME_SUBTITLE"] | safe }}</p> {% endif %}
+<header class="masthead">
+  <div class="pb-4 pl-2 pr-2 h-50">
+    <div class="row h-100 align-items-center flex-dir">
+        <div class="col">
+                <img class="img-responsive"
+                  style="max-width: 400px; float: right;"
+                  src="{{ conf['WALLPAPER_URL'] }}">
+        </div>
+        <div class="col">
+            <h1 class="mt-4 title-responsive text-color-special ths-text-cg">
+                Tel: 0911 / 7530-177 <br>
+                Fax: 0911 / 7568-722
+            </h1>
         </div>
     </div>
   </div>
@@ -58,81 +60,45 @@
 {% endif %}
 
 <!-- announcements -->
-{% if announcements %}
-<div class="bg-secondary">
-  <div class="container pb-2 pt-2">
-	{% include 'announcements.html' %}
+
+
+  <div class="container ths-box-manual pb-2 pt-2 text-color-special">
+        Willkommen auf den Seiten der Thermoscan Thermographie GmbH.<br>
+        Seit über 20 Jahren sind wir unseren Kunden ein zuverlässiger Partner in den Bereichen:
   </div>
-</div>
-{% endif %}
-
-<!-- twitch -->
-  {% if conf["TWITCH_CHANNEL"] %}
-  <div class="bg-dark pb-4">
-    <div class="container pt-5 text-color-special">
-
-      <div id="twitch-consent-placeholder" class="card bg-dark text-white">
-         <img style="min-width: 80%; min-height: 200px;"
-            class="card-img" realsrc="{{ conf['TWITCH_PLACEHOLDER_IMG'] }}" >
-        <div class="card-img-overlay">
-          <label class="switch mt-3 mt-0-u440">
-            <input id="toogle-twitch" class="custom-control-input"
-              type="checkbox" onchange="handleToggle(this.id)">
-            <span class="slider"></span>
-          </label>
-          <div class="switch-caption ml-3 mt-3 mt-0-u440" style="font-size: x-large;">
-                  Laden externe Inhalte von Twitch.tv zulassen
-          </div>
-        </div>
-      </div>
-      <!-- Add a placeholder for the Twitch embed -->
-      <div id="twitch-embed"></div>
-      <script>
-          document.getElementById("toogle-twitch").checked = false
-          function handleToggle(id){
-              if(document.getElementById(id).checked){
-                createTwitchFrame()
-                document.getElementById("twitch-consent-placeholder").style.display = "none";
-              }else{
-                document.getElementById("twitch-consent-placeholder").style.display = "";
-                destroyTwitchFrame()
-              }
-          }
-
-          function createTwitchFrame(){
-	      options = { width: "100%", height: 480, channel: "{{ conf['TWITCH_CHANNEL'] }}" }
-              new Twitch.Embed("twitch-embed", options);
-          }
-
-          function destroyTwitchFrame(){
-              window.location.reload()
-          }
-      </script>
-
-
-      <!-- Create a Twitch.Embed object that will render within the "twitch-embed" root element. -->
-    </div>
-  </div>
-  {% endif %}
 
   {% for section in sections %}
   <div class="pt-2 pb-4">
     <div class="container text-color-special">
-      <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>
-        <div class="mt-3 col image-min-dimensions">
-          <img class="img-responsive w-100" realsrc="{{ section['picture'] }}">
-        </div>
-        <div class="mt-3 col text-min-dimensions">
-          <h1>{{ section['title'] }}</h1>
+      <div class="row {% if loop.index %2 == 1 %} flex-dir {% endif %}">
+        <div class="ths-box mt-1 col text-min-dimensions p-4
+                    {% if loop.index %2 == 1 %}
+                        ml-3
+                    {% else %}
+                        mr-3
+                    {% endif %}">
+          <h4>{{ section['title'] }}</h4>
           <p class="mt-3">
-            {{ section["text"] }}
+          <small>{{ section["text"] }}</small>
           </p>
           {% if section["moreInfoButtonText"] %}
             <a type=button href="{{ section['moreInfoButtonHref'] }}"
               class="mt-3 btn btn-light">{{ section["moreInfoButtonText"] }}
             </a>
           {% endif %}
+          <div class="ths-box mt-1 col image-min-dimensions ths-under766"
+                  style="padding: 0 !important; border: unset">
+            <img class="ths-border-round-img img-responsive w-100"
+                realsrc="{{ section['picture'] }}">
+          </div>
         </div>
+
+        <!-- larger displays -->
+        <div class="ths-box mt-1 col image-min-dimensions ths-over766">
+          <img class="ths-border-round-img img-responsive w-100"
+              realsrc="{{ section['picture'] }}">
+        </div>
+
       </div>
     </div>
   </div>

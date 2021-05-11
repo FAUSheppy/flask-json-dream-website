@@ -5,12 +5,71 @@ html {
 body {
     font-size: 20px;
     overflow-x: hidden;
+    #background: linear-gradient(to left, 60deg, #88bbcf, #54c4eb, #aeb2b5) !important;
     background: linear-gradient(to right, #88bbcf, #54c4eb, #e1f5fc) !important;
+    #background: rgb(255,255,255);
+    #background: linear-gradient(30deg, rgba(255,255,255,1) 0%, rgba(105,154,194,1) 35%, rgba(105,154,194,1) 78%, rgba(255,255,255,1) 100%);
+}
+
+.flex-dir{
+    flex-direction: row-reverse;
+}
+
+.ths-hr{
+    border: 1px  solid white;
+    border-radius 5px;
+    margin: auto;
+    width: 90%;
+}
+
+.ths-box-manual{
+    background: white;
+    padding: 10px;
+    border: 0.5px solid black;
+    border-radius: 20px;
+}
+
+.ths-under766{
+    display: none;
+}
+
+.ths-box{
+    background: white;
+    padding: 10px;
+    border: 0.5px solid black;
+    border-radius: 20px;
+}
+
+.ths-text-cg{
+    font-family: cg;
+}
+
+.ths-dot{
+    text-align: center !important;
+    color: rgba(255,0,0) !important;
+    font-size: 50px !important;
+}
+
+.ths-border-round-img{
+    border-radius: 20px;
 }
 
 @media (max-width: 767px) {
     body {
         font-size: 25px;
+    }
+    .ths-box {
+        margin-right: 0px !important;
+        margin-left:  0px !important;
+    }
+    .flex-dir{
+        flex-direction: unset;
+    }
+    .ths-under766{
+        display: block;
+    }
+    .ths-over766{
+        display: none;
     }
 }
 
@@ -21,21 +80,31 @@ body {
 }
 
 .title-responsive{
-    font-size: 25px !important;
     padding-left: 40px;
+    font-size: 40px !important;
+    padding-left: unset;
+    border: 2px black solid;
+    padding: 10px;
+    background: whitesmoke;
+    min-width: 500px;
+    text-align: center;
+    max-width: 600px;
+    margin-left: 20%;
 }
 
 @media (max-width: 1300px) {
     .title-responsive{
-        font-size: 20px !important;
-        padding-left: unset;
+        min-width: 500px;
+        font-size: 40px !important;
+        margin-left: unset;
     }
 }
 
 @media (max-width: 900px) {
     .title-responsive{
-        font-size: 2.2vw !important;
-        padding-left: unset;
+        font-size: 30px !important;
+        min-width: 400px;
+        margin-left: unset;
     }
 }
 
@@ -53,6 +122,7 @@ body {
 
 .text-color-special{
   color: black;
+  font-family: Veranda;
 }
 
 .stretched-link::after {
