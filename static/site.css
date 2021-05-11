@@ -5,6 +5,7 @@ html {
 body {
     font-size: 20px;
     overflow-x: hidden;
+    background: linear-gradient(to right, #88bbcf, #54c4eb, #e1f5fc) !important;
 }
 
 @media (max-width: 767px) {
@@ -51,7 +52,7 @@ body {
 }
 
 .text-color-special{
-  color: #eae9e9;
+  color: black;
 }
 
 .stretched-link::after {
