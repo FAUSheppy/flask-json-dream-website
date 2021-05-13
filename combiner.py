@@ -23,6 +23,12 @@ MAP = {
             "trocknung.php"       : None
         }
 
+REVERSE_MAP = { "/contact": "/kontakt.php" }
+for k,v in MAP.items():
+    if not v or not "content" in v:
+        continue
+    REVERSE_MAP.update({ v : k })
+
 for key, value in MAP.items():
     
     if value:
@@ -46,7 +52,17 @@ for key, value in MAP.items():
                 if "</body>" in l or "</html>" in l:
                     continue
 
+                for k in REVERSE_MAP.keys():
+                    if k and "href=\"" + k in l:
+                        if "contact" in l:
+                            print(l)
+                            print(k)
+                            print(REVERSE_MAP[k])
+                        l = l.replace("href=\"" + k, "href=\"" + REVERSE_MAP[k])
+                        if "kontakt" in l:
+                            print(l)
                 f.write(l)
+                f.write("\n")
 
         # read old toplevel file #
         contentNew = []
@@ -64,5 +80,12 @@ for key, value in MAP.items():
             f.write("".join(contentNew))    
 
     if not value:
-        with open(os.path.join(TARGET_DIR, key), "a") as f:
-            f.write("require('module/endhtml.php')\n");
+        content = []
+        with open(os.path.join(TARGET_DIR, key), "r") as f:
+            content = f.read().split("\n")
+
+        with open(os.path.join(TARGET_DIR, key), "w") as f:
+            content = content[:-1]
+            content += ["require('module/endhtml.php')"]
+            content += ["?>"]
+            f.write("\n".join(content));
