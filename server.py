@@ -205,6 +205,7 @@ def content():
 
         # check for extra config # 
         extraConfigDir = app.config[identifier + CONFIG_POSTFIX]
+        commonName  = app.config.get(identifier + CONFIG_POSTFIX + "cn")
         extraConfig = None
         markupText  = None
         if extraConfigDir:
@@ -212,14 +213,15 @@ def content():
             if os.path.isdir(fullpath):
                 extraConfig = readJsonDir(fullpath)
                 markupText = flask.Markup(flask.render_template(app.config[identifier],
-                                    extraConfig=extraConfig))
+                        extraConfig=extraConfig, commonName=commonName))
             else:
                 with open(fullpath) as f:
                     markupText = markdown2.markdown(f.read())
                     container = True
 
         return flask.render_template("default_content.html", container=container,
-                                        conf=app.config, markupText=markupText)
+                                        conf=app.config, markupText=markupText,
+                                        commonName=commonName)
     else:
         return (EMPTY_STRING, HTTP_NOT_FOUND)
 
@@ -418,6 +420,8 @@ def init():
                     app.config[configKey] = subpages[identifier]["config-dir"]
                 else:
                     app.config[configKey] = subpages[identifier]["markdown"]
+                if "cn" in subpages[identifier]:
+                    app.config[configKey + "cn"] = subpages[identifier]["cn"]
             else:
                 app.config[IDENTIFIER_PREFIX + identifier] = subpages[identifier]
                 app.config[IDENTIFIER_PREFIX + identifier + CONFIG_POSTFIX] = None
