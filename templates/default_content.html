@@ -6,6 +6,7 @@
 
 </head>
 <body class="bg-special">
+    <div class="mobile-display">
 	{% include 'navbar.html' %}
     {% if not container %}
     {{ markupText | safe }}
@@ -19,7 +20,7 @@
 		</div>
 	</div>
     {% endif %}
-
 	{% include 'footer.html' %}
+    </div>
 </body>
 </html>
