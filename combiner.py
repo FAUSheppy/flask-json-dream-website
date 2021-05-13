@@ -30,16 +30,11 @@ for key, value in MAP.items():
         phpFile = os.path.join(TARGET_DIR, key)
         response = requests.get("http://localhost:5000" + value)
         mobileFile = os.path.join(TARGET_DIR, key[:-4]) + "-mobile.php" 
-        with open(mobileFile, "w") as f:
-            f.write(response.content.decode("utf-8"))
-   
-        # read old toplevel file #
-        contentNew = []
-        with open(os.path.join(TARGET_DIR, key), "r") as f:
 
+        with open(mobileFile, "w") as f:
             foundStart = False
-            for l in f:
-                
+            for l in response.content.decode("utf-8").split("\n"):
+
                 # look for start #
                 if not foundStart:
                     if "mobile-display" in l:
@@ -50,6 +45,14 @@ for key, value in MAP.items():
                 # skip end
                 if "</body>" in l or "</html>" in l:
                     continue
+
+                f.write(l)
+
+        # read old toplevel file #
+        contentNew = []
+        with open(os.path.join(TARGET_DIR, key), "r") as f:
+
+            for l in f:
 
                 contentNew += [l]
                 if "footerbereich" in l:
