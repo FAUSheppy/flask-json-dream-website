@@ -212,6 +212,12 @@ def content():
             fullpath = os.path.join(app.config["CONTENT_DIR"], extraConfigDir)
             if os.path.isdir(fullpath):
                 extraConfig = readJsonDir(fullpath)
+
+                # picture slider! #
+                for section in extraConfig:
+                    if section["picture"]:
+                        section.update({"picture-overlay" : section["picture"][:-4] + "_g.jpg"})
+
                 markupText = flask.Markup(flask.render_template(app.config[identifier],
                         extraConfig=extraConfig, commonName=commonName))
             else:
