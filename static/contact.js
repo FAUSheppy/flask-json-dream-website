@@ -21,9 +21,19 @@ function submitContactForm(){
 
     /* submit the form */
     xhr = new XMLHttpRequest();
-    xhr.open("POST", "/contact-api"); 
+    xhr.open("POST", "/kontakt.php"); 
     xhr.onload = formSubmitFinished
+
     formData = new FormData(document.getElementById("contact-form")); 
+
+    formData.append("sinfo", "dsenda");
+    formData.append("in", "");
+    formData.append("anrede", "Herr/Frau");
+    formData.append("vorname", "");
+    formData.append("fname", formData.get("name"));
+    formData.append("mail",  formData.get("telefon"));
+    formData.append("ma", 0);
+
     xhr.send(formData);
 
 }

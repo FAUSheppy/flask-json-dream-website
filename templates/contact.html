@@ -13,11 +13,12 @@
 </head>
 
 <body class="bg-secondary">
+<div class="mobile-display">
   {% include 'navbar.html' %}
   {% include 'progress_window.html' %}
     <div id="main-container" class="container" style="margin-top: 4vw;">
       <section class="mb-4">
-        <h2 class="text-color-special h1-responsive font-weight-bold my-4">
+        <h2 class="text-color-special title-responsive my-4 ths-text-cg">
                 {{ conf['CONTACT_HEADLINE'] }}
         </h2>
         <p class="text-center w-responsive mx-auto mb-5"> </p>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="col-md-6 mt-2">
                   <div class="md-form mb-0">
-                  <input type="text" id="email" name="email" class="form-control"
+                  <input type="text" id="email" name="telefon" class="form-control"
                                     placeholder="{{ conf['CONTACT_PLACEHOLDER_EMAIL'] }}">
                   </div>
                 </div>
@@ -43,7 +44,7 @@
               <div class="row mt-2">
                 <div class="col-md-12">
                 <div class="md-form mb-0">
-                  <input type="text" id="subject" name="subject" class="form-control"
+                  <input type="text" id="subject" name="betreff" class="form-control"
                                     placeholder="{{ conf['CONTACT_PLACEHOLDER_SUBJECT'] }}">
                   </div>
                 </div>
@@ -52,7 +53,7 @@
               <div class="row mt-2">
                 <div class="col-md-12">
                   <div class="md-form">
-                  <textarea type="text" id="message" name="message" rows="10"
+                  <textarea type="text" id="message" name="nachricht" rows="10"
                                     placeholder="{{ conf['CONTACT_PLACEHOLDER_TEXTAREA'] }}"
                       class="form-control md-textarea"></textarea>
                 </div>
@@ -68,13 +69,9 @@
           <div class="border p-3 col-md-3 text-center bg-special">
             <ul class="list-unstyled mb-0">
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                <p>Wir freuen uns auf Ihre Nachricht!</p>
-                {% if conf['CONTACT_EMAIL'] %}
-                <hr>
                 <p>Natürlich können Sie uns auch direkt per Mail kontaktieren.</p></br>
-                <a type="button" class="btn btn-light p-3 w-75" 
+                <a type="button" class="btn btn-light p-3 w-100" 
                         href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
-                {% endif %}
                 {% if PGP_KEY %}
                 <script>
                     function copyPGP(){
@@ -100,5 +97,6 @@
 
       </section>
     </div>
+</div>
 </body>
 </html>

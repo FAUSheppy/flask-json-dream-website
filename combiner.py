@@ -14,7 +14,7 @@ MAP = {
             "gebaeudecheck.php"   : "/content/?id=gebaeude-gebaeudecheck",
             "luftdichtheit.php"   : "/content/?id=gebaeude-luftdichtheit",
             "index.php"           : "/",
-            "kontakt.php"         : None,
+            "kontakt.php"         : "/contact",
             "leckageortung.php"   : "/content/?id=wasserschaeden-leckageortung",
             "leitunsgsortung.php" : "/content/?id=wasserschaeden-leitungsortung",
             "schaltanlagen.php"   : "/content/?id=anlagen-elektronik-schaltanlagen",
@@ -23,7 +23,7 @@ MAP = {
             "trocknung.php"       : None
         }
 
-REVERSE_MAP = { "/contact": "/kontakt.php" }
+REVERSE_MAP = { "/contact" : "/kontakt.php" }
 for k,v in MAP.items():
     if not v or not "content" in v:
         continue
@@ -54,13 +54,7 @@ for key, value in MAP.items():
 
                 for k in REVERSE_MAP.keys():
                     if k and "href=\"" + k in l:
-                        if "contact" in l:
-                            print(l)
-                            print(k)
-                            print(REVERSE_MAP[k])
                         l = l.replace("href=\"" + k, "href=\"" + REVERSE_MAP[k])
-                        if "kontakt" in l:
-                            print(l)
                 f.write(l)
                 f.write("\n")
 
