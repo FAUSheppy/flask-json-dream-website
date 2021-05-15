@@ -47,7 +47,7 @@
       {% for card in mainLinks %}
       <div class="col-md-3">
         <div class="card mb-4 box-shadow border-0 hover-to-75">
-          <img class="card-img-top" realsrc="{{ card['picture'] }}">
+          <img class="card-img-top" src="{{ card['picture'] }}">
           <div class="card-img-overlay">
             <a href="{{ card['link'] }}" class="stretched-link"></a>
           </div>
@@ -91,14 +91,14 @@
           <div class="ths-box mt-1 col image-min-dimensions ths-under766"
                   style="padding: 0 !important; border: unset">
             <img class="ths-border-round-img img-responsive w-100"
-                realsrc="{{ section['picture'] }}">
+                src="{{ section['picture'] }}">
           </div>
         </div>
 
         <!-- larger displays -->
         <div class="ths-box mt-1 col image-min-dimensions ths-over766">
           <img class="ths-border-round-img img-responsive w-100"
-              realsrc="{{ section['picture'] }}">
+              src="{{ section['picture'] }}">
         </div>
 
       </div>
