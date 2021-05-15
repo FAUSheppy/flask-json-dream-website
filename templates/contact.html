@@ -23,7 +23,7 @@
         </h2>
         <p class="text-center w-responsive mx-auto mb-5"> </p>
           <div class="row">
-         <div class="col-md-9 mb-md-0 mb-5">
+         <div class="col-md-8 mb-md-0 mb-5">
             <form id="contact-form" name="contact-form">
             <!-- action="contact-api" method="POST" enctype='application/json'> -->
               <div class="row">
@@ -69,11 +69,11 @@
          <div class="status"></div>
          </div>
 
-          <div class="border p-3 col-md-3 text-center bg-special">
+          <div class="border p-3 col-md-4 text-center bg-special">
             <ul class="list-unstyled mb-0">
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
                 <p>Natürlich können Sie uns auch direkt per Mail kontaktieren.</p></br>
-                <a type="button" class="btn btn-light p-3 w-100" 
+                <a type="button" class="btn btn-light p-3" 
                         href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
                 {% if PGP_KEY %}
                 <script>
