@@ -11,6 +11,11 @@ body {
     #background: linear-gradient(30deg, rgba(255,255,255,1) 0%, rgba(105,154,194,1) 35%, rgba(105,154,194,1) 78%, rgba(255,255,255,1) 100%);
 }
 
+.a-special{
+    text-decoration: "underline" !important;
+    color: black; 
+}
+
 .no-mobile-display{
     display: block;
 }
