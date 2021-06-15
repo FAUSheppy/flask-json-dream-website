@@ -19,6 +19,12 @@ body {
     }
 }
 
+.flag{
+    max-height: 100%;
+    max-width: 120%;
+    background-repeat: round !important;
+}
+
 .title-responsive{
     font-size: 25px !important;
     padding-left: 40px;

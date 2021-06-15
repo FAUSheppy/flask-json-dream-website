@@ -78,6 +78,22 @@
         </li>
         {% endif %}
 
+	{% if conf["LANGUAGE"] == "en" %}
+        <li>
+	  <a class="nav-link flag" href="/"
+		  style="background-image: url('https://potaris.de/picture/lang/german-flag.png');">
+		  DE
+	  </a>
+        </li>
+	{% elif conf["LANGUAGE"] == "de" %}
+        <li>
+          <a class="nav-link flag" href="/en/"
+		  style="background-image: url('https://potaris.de/picture/lang/uk-flag.png');">
+		  EN
+	  </a>
+        </li>
+	{% endif %}
+
       </ul>
       
     </div>
