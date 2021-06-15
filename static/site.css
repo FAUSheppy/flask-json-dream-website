@@ -7,9 +7,20 @@ body {
     overflow-x: hidden;
 }
 
+.flag{
+    height: 40px;
+    width: 70px;
+    background-repeat: round !important;
+    margin-left: 20px;
+    padding: 0 !important;
+}
+
 @media (max-width: 767px) {
     body {
         font-size: 25px;
+    }
+    .flag{
+        margin-left: unset;
     }
 }
 
@@ -17,12 +28,9 @@ body {
     body {
         font-size: 5vw;
     }
-}
-
-.flag{
-    max-height: 100%;
-    max-width: 120%;
-    background-repeat: round !important;
+    h1{
+	font-size: 30px;
+    }
 }
 
 .title-responsive{
@@ -34,6 +42,12 @@ body {
     .title-responsive{
         font-size: 20px !important;
         padding-left: unset;
+    }
+}
+
+@media (max-width: 1300px) and (min-width: 766px){
+    h1{
+	font-size: 3.5vw;
     }
 }
 
@@ -113,6 +127,13 @@ body {
 .hover-to-75:hover{
     opacity: 1 !important;
     background: rgba(0,0,0,0.25) !important;
+}
+
+.force-fill{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .wrapper {
