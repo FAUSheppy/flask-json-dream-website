@@ -15,12 +15,25 @@ body {
     padding: 0 !important;
 }
 
+.mobile-only{
+    display: none;
+}
+.desktop-only{
+    display: block;
+}
+
 @media (max-width: 767px) {
     body {
         font-size: 25px;
     }
     .flag{
         margin-left: unset;
+    }
+    .mobile-only{
+	display: block;
+    }
+    .desktop-only{
+	display: none;
     }
 }
 
