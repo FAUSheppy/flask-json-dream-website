@@ -41,6 +41,9 @@ body {
     body {
         font-size: 5vw;
     }
+    h1{
+	font-size: 30px;
+    }
 }
 
 .title-responsive{
@@ -52,6 +55,12 @@ body {
     .title-responsive{
         font-size: 20px !important;
         padding-left: unset;
+    }
+}
+
+@media (max-width: 1300px) and (min-width: 766px){
+    h1{
+	font-size: 3.5vw;
     }
 }
 
