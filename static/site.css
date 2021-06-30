@@ -7,12 +7,27 @@ body {
     overflow-x: hidden;
 }
 
+p{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+h1{
+    font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
 .flag{
     height: 40px;
     width: 70px;
     background-repeat: round !important;
     margin-left: 20px;
     padding: 0 !important;
+}
+
+.mobile-only{
+    display: none;
+}
+.desktop-only{
+    display: block;
 }
 
 @media (max-width: 767px) {
@@ -22,14 +37,17 @@ body {
     .flag{
         margin-left: unset;
     }
+    .mobile-only{
+	display: block;
+    }
+    .desktop-only{
+	display: none;
+    }
 }
 
 @media (max-width: 500px) {
     body {
         font-size: 5vw;
-    }
-    h1{
-	font-size: 30px;
     }
 }
 
@@ -42,12 +60,6 @@ body {
     .title-responsive{
         font-size: 20px !important;
         padding-left: unset;
-    }
-}
-
-@media (max-width: 1300px) and (min-width: 766px){
-    h1{
-	font-size: 3.5vw;
     }
 }
 
