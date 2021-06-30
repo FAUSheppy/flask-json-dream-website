@@ -2,19 +2,23 @@
       {% if conf["IMPRESSUM_IS_CONTACT"] %}
          <a style="color: rgba(255,255,255,.5);" href="/impressum">Impressum/Kontakt</a>
       {% else %}
-         <a class="mr-2" style="color: rgba(255,255,255,.5);" href="/impressum">
 	 	{% if conf["LANGUAGE"] == "en" %}
+         	<a class="mr-2" style="color: rgba(255,255,255,.5);" href="/en/impressum">
 			Legal
+	 	</a>
 		{% else %}
+         	<a class="mr-2" style="color: rgba(255,255,255,.5);" href="/impressum">
 		 	Impressum
+	 	</a>
 		{% endif %}
-	 </a>
-         <a class="ml-2" style="color: rgba(255,255,255,.5);" href="/contact">
 	 	{% if conf["LANGUAGE"] == "en" %}
+         	<a class="ml-2" style="color: rgba(255,255,255,.5);" href="/en/contact">
 			Contact
+	 	</a>
 		{% else %}
-		 	Kontakt
+         	<a class="ml-2" style="color: rgba(255,255,255,.5);" href="/contact">
+			Kontakt
+	 	</a>
 		{% endif %}
-	 </a>
       {% endif %}
 </div>
