@@ -12,25 +12,60 @@
   {% endif %}
 
 </head>
-<body id="main_scrollable">
+<body id="main_scrollable"
+	>
 <!-- NAVBAR -->
 {% include 'navbar.html' %}
 
-<!-- Site wellcome header -->
-<header class="masthead {% if conf['NO_CENTER_TITLE'] %} h-50 {% endif %}"
-        style="background-color: #312a2a;"
-        {% if conf['WALLPAPER_URL'] %} realsrc='{{ conf["WALLPAPER_URL"] }}' {% endif %}>
+<!-- Site wellcome header style="background-color: #312a2a;" -->
+<!--
+<header class="masthead {% if conf['NO_CENTER_TITLE'] %} {% endif %}"
+        {% if conf['WALLPAPER_URL'] %} realsrc='{{ conf["WALLPAPER_URL"] }}' {% endif %}
+		style="background-image: url('{{ conf["WALLPAPER_URL"] }}');">
+-->
+
+  <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-target="#carouselIndicators" data-slide-to="0" class="active"></li>
+      <li data-target="#carouselIndicators" data-slide-to="1"></li>
+      <li data-target="#carouselIndicators" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      {% for (url, alt, title, subtitle) in conf["WALLPAPER_REEL"] %}
+      <div class="carousel-item {% if loop.first %} active {% endif %}">
+	      <img class="d-block w-100" src="{{ url }}" alt="{{ alt }}">
+	        <div class="carousel-caption d-none d-md-block">
+			<h2>{{ title }}</h2>
+			<p>{{ subtitle }}</p>
+  		</div>
+      </div>
+      {% endfor %}
+    </div>
+    <a class="carousel-control-prev" href="#carouselIndicators" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselIndicators" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+
+
+<!--
   <div class="{% if conf['NO_CENTER_TITLE'] %} pb-4 pl-2 pr-2 {% else %} container {% endif %} 
               {% if conf['WALLPAPER_URL'] %} h-50 {% endif %}">
     <div class="row h-100 align-items-center">
       <div class="col-12 {% if not conf['NO_CENTER_TITLE'] %} text-center {% endif %}">
-        <div style="opacity: 0;"></div> <!-- TODO color for text configurable -->
+        <div style="opacity: 0;"></div>
         {% if "SITE_WELLCOME_TITLE" in conf %} <h1 class="pt-4 font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_TITLE"] | safe }}</h1> {% endif %}
         {% if "SITE_WELLCOME_SUBTITLE" in conf %} <p class="pt-4 title-responsive font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_SUBTITLE"] | safe }}</p> {% endif %}
         </div>
     </div>
   </div>
 </header>
+-->
+
 
 <!-- events -->
 {% include 'events.html' %}
@@ -114,14 +149,18 @@
   </div>
   {% endif %}
 
-    <div style="background: rgb(49,42,42);">
+  <!--
+    <div>
     	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 70 500 80">
     		<path fill="#6c757d"d="M-19.19,103.90 C244.35,159.17 290.06,-2.67 507.90,124.63 L500.00,150.00 L-9.03,192.72 Z">
 		</path>
   	</svg>
     </div>
+  -->
+
   {% for section in sections %}
-  <div class="{% if loop.index %2 == 1 %} bg-secondary {% else %} bg-dark {% endif %} pt-2 pb-4">
+  <div {% if "id" in section %} id="{{ section['id'] }}" {% endif %}
+      class="{% if loop.index %2 == 1 %} bg-secondary {% else %} bg-dark {% endif %} pt-2 pb-4">
     <div class="container text-color-special">
       <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>
         <div class="mt-3 col image-min-dimensions">

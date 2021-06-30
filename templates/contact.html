@@ -60,7 +60,13 @@
               </div>
          </form>
          <div class="text-center text-md-left mt-4">
-           <a class="btn btn-light w-50" onclick="submitContactForm()">Absenden</a>
+           <a class="btn btn-light w-50" onclick="submitContactForm()">
+		{% if conf["LANGUAGE"] == "en" %}
+		Send
+		{% else %}
+		Absenden
+		{% endif %}
+	   </a>
          </div>
          <div class="status"></div>
          </div>
@@ -68,10 +74,20 @@
           <div class="border p-3 col-md-3 text-center bg-special">
             <ul class="list-unstyled mb-0">
               <li><i class="fas fa-envelope mt-4 fa-2x"></i>
-                <p>Wir freuen uns auf Ihre Nachricht!</p>
+		<p>
+		{% if conf["LANGUAGE"] == "en" %}
+		We are excited to learn about your project!
+		{% else %}
+		Wir freuen uns auf Ihre Nachricht!
+		{% endif %}
+		</p>
                 {% if conf['CONTACT_EMAIL'] %}
                 <hr>
+		{% if conf["LANGUAGE"] == "en" %}
+		You may also contact us directly via E-mail.
+		{% else %}
                 <p>Natürlich können Sie uns auch direkt per Mail kontaktieren.</p></br>
+		{% endif %}
                 <a type="button" class="btn btn-light p-3 w-100" 
                         href="mailto:{{ conf['CONTACT_EMAIL'] }}">{{ conf['CONTACT_EMAIL'] }}</a>
                 {% endif %}
