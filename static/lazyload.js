@@ -73,9 +73,9 @@ function changeSrc(offset){
                         || newSrc.indexOf(".jpeg") > -1){
                     /* get correct size */
 		    if(xWidth || yHeight){
-			if(xWidth !=null && xHeight != null){
+			if(xWidth !=null && yHeight != null){
                     		newSrc += "?scalex=" + xWidth + "&scaley=" + yHeight
-			}else if(xWdith != null){
+			}else if(xWidth != null){
                     		newSrc += "?x=" + xWidth
 			}else{
                     		newSrc += "?y=" + yHeight
