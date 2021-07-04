@@ -164,7 +164,7 @@
     <div class="container text-color-special">
       <div class="row" {% if loop.index %2 == 1 %} style="flex-direction: row-reverse;" {% endif %}>
         <div class="mt-3 col image-min-dimensions">
-          <img class="img-responsive w-100" realsrc="{{ section['picture'] }}">
+          <img class="img-responsive w-100" realsrc="{{ section['picture'] }}" LAZYLOAD_WIDTH="520">
         </div>
         <div class="mt-3 col text-min-dimensions">
           <h1>{{ section['title'] }}</h1>

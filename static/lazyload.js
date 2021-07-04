@@ -17,7 +17,7 @@ function getSize(src){
 
 /* check if browser is capable of webp */
 function supportsWebp() {
-    return /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+    return true;
 
     /* alternative to check for webP support */
     //if (!self.createImageBitmap) return false;
@@ -34,6 +34,8 @@ var counter = 0
 var viewbox_y = -Infinity
 
 IDENT = "realsrc"
+WIDTH_LOCK = "LAZYLOAD_WIDTH"
+HEIGHT_LOCK = "LAZYLOAD_HEIGHT"
 
 /* function to load images */
 function changeSrc(offset){
@@ -58,6 +60,8 @@ function changeSrc(offset){
                     && boundingClientRect.top < window.innerHeight + offset) {
 
                 var newSrc = elements[i].getAttribute(IDENT)
+                var xWidth  = elements[i].getAttribute(WIDTH_LOCK)
+                var yHeight = elements[i].getAttribute(HEIGHT_LOCK)
                 if(!newSrc){
                     console.log(elements[i])
                 }
@@ -68,7 +72,17 @@ function changeSrc(offset){
                         || newSrc.indexOf(".png") > -1
                         || newSrc.indexOf(".jpeg") > -1){
                     /* get correct size */
-                    newSrc += getSize(newSrc)
+		    if(xWidth || yHeight){
+			if(xWidth !=null && xHeight != null){
+                    		newSrc += "?scalex=" + xWidth + "&scaley=" + yHeight
+			}else if(xWdith != null){
+                    		newSrc += "?x=" + xWidth
+			}else{
+                    		newSrc += "?y=" + yHeight
+			}
+		    }else{
+                    	newSrc += getSize(newSrc)
+		    }
 
                     /* load webP if supported */
                     if(webP){
