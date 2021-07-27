@@ -217,6 +217,10 @@ def content():
                 with open(fullpath) as f:
                     markupText = markdown2.markdown(f.read())
                     container = True
+        else:
+            container = True
+            markupText = flask.Markup(flask.render_template(app.config[identifier],
+                                        extraConfig=extraConfig)
 
         return flask.render_template("default_content.html", container=container,
                                         conf=app.config, markupText=markupText)
