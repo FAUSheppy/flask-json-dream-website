@@ -18,11 +18,24 @@
 {% include 'navbar.html' %}
 
 <!-- Site wellcome header style="background-color: #312a2a;" -->
-<!--
+{% if "WALLPAPER_REEL" not in conf or not conf["WALLPAPER_REEL"] %}
+
 <header class="masthead {% if conf['NO_CENTER_TITLE'] %} {% endif %}"
         {% if conf['WALLPAPER_URL'] %} realsrc='{{ conf["WALLPAPER_URL"] }}' {% endif %}
 		style="background-image: url('{{ conf["WALLPAPER_URL"] }}');">
--->
+  <div class="{% if conf['NO_CENTER_TITLE'] %} pb-4 pl-2 pr-2 {% else %} container {% endif %} 
+              {% if conf['WALLPAPER_URL'] %} h-50 {% endif %}">
+    <div class="row h-100 align-items-center">
+      <div class="col-12 {% if not conf['NO_CENTER_TITLE'] %} text-center {% endif %}">
+        <div style="opacity: 0;"></div>
+        {% if "SITE_WELLCOME_TITLE" in conf %} <h1 class="pt-4 font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_TITLE"] | safe }}</h1> {% endif %}
+        {% if "SITE_WELLCOME_SUBTITLE" in conf %} <p class="pt-4 title-responsive font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_SUBTITLE"] | safe }}</p> {% endif %}
+        </div>
+    </div>
+  </div>
+</header>
+
+{% else %}
 
   <div id="carouselIndicators" class="carousel slide" data-ride="carousel">
     <ol class="carousel-indicators">
@@ -50,22 +63,6 @@
       <span class="sr-only">Next</span>
     </a>
   </div>
-
-
-<!--
-  <div class="{% if conf['NO_CENTER_TITLE'] %} pb-4 pl-2 pr-2 {% else %} container {% endif %} 
-              {% if conf['WALLPAPER_URL'] %} h-50 {% endif %}">
-    <div class="row h-100 align-items-center">
-      <div class="col-12 {% if not conf['NO_CENTER_TITLE'] %} text-center {% endif %}">
-        <div style="opacity: 0;"></div>
-        {% if "SITE_WELLCOME_TITLE" in conf %} <h1 class="pt-4 font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_TITLE"] | safe }}</h1> {% endif %}
-        {% if "SITE_WELLCOME_SUBTITLE" in conf %} <p class="pt-4 title-responsive font-weight-light" style="{{ conf['SITE_WELLCOME_TITLE_CSS'] | safe }}">{{ conf["SITE_WELLCOME_SUBTITLE"] | safe }}</p> {% endif %}
-        </div>
-    </div>
-  </div>
-</header>
--->
-
 
 <!-- events -->
 {% include 'events.html' %}
