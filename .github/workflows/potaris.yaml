@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - "potaris"
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    environment:
+        name: prod
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      -
+        name: Login to Docker Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ secrets.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASS }}
+      -
+        name: Build and push Potaris DE image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./docker/potaris/
+          platforms: linux/amd64
+          push: true
+          tags: "${{ secrets.REGISTRY }}/athq/fjsd-potaris:latest"
+          build-args: |
+            BRANCH=potaris
+            CONFIG_BRANCH=master
+          secrets: |
+            "CONFIG_REPOSITORY=${{ secrets.CONFIG_REPOSITORY_POTARIS }}"
+            "CONFIG_REPOSITORY_KEY=${{ secrets.CONFIG_REPOSITORY_POTARIS_KEY }}"
+      -
+        name: Build and push Potaris EN image
+        uses: docker/build-push-action@v3
+        with:
+          context: ./docker/potaris/
+          platforms: linux/amd64
+          push: true
+          tags: "${{ secrets.REGISTRY }}/athq/fjsd-potaris-en:latest"
+          build-args: |
+            BRANCH=potaris
+            CONFIG_BRANCH=en
+          secrets: |
+            "CONFIG_REPOSITORY=${{ secrets.CONFIG_REPOSITORY_POTARIS }}"
+            "CONFIG_REPOSITORY_KEY=${{ secrets.CONFIG_REPOSITORY_POTARIS_KEY }}"

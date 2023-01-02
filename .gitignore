@@ -10,3 +10,5 @@ cache.json
 auth.txt
 *content/
 config_prod.py
+config_repository.txt
+config_repository_key.txt
