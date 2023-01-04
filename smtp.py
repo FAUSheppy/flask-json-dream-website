@@ -6,7 +6,7 @@ def checkSMTPConnection(app):
     '''Check connection and login on SMTP server configured in app config'''
 
     if not app.config["SMTP_MUST_BE_CONNECTED"]:
-        print("Warning: SMTP unusable: {}".format(e), file=sys.stderr)
+        print("Warning: SMTP unusable")
         return
 
     try:
