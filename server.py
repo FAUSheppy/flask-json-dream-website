@@ -260,8 +260,8 @@ def news():
 
 @app.route("/static/<path:path>")
 def sendStatic(path):
-    cache_timeout = 2592000
-    return flask.send_from_directory('static', path, cache_timeout=cache_timeout)
+    max_age = 2592000
+    return flask.send_from_directory('static', path, max_age=max_age)
 
 def generatePicture(pathToOrig, scaleX, scaleY, encoding):
     '''Generate an pictures with the requested scales and encoding if it doesn't already exist'''
@@ -305,7 +305,7 @@ def generatePicture(pathToOrig, scaleX, scaleY, encoding):
 
 @app.route("/picture/<path:path>")
 def sendPicture(path):
-    cache_timeout = 2592000
+    max_age = 2592000
 
     scaleY = flask.request.args.get("scaley")
     scaleX = flask.request.args.get("scalex")
@@ -315,7 +315,7 @@ def sendPicture(path):
         scaleX = round(float(scaleX))
         path = generatePicture(path, scaleX, scaleY, flask.request.args.get("encoding"))
 
-    raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, cache_timeout=cache_timeout)
+    raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, max_age=cache_timeout)
     response = flask.make_response(raw)
     response.headers['X-ATHQ-INTERNAL-FID'] = path
 
