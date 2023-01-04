@@ -220,7 +220,7 @@ def content():
         else:
             container = True
             markupText = flask.Markup(flask.render_template(app.config[identifier],
-                                        extraConfig=extraConfig)
+                                        extraConfig=extraConfig))
 
         return flask.render_template("default_content.html", container=container,
                                         conf=app.config, markupText=markupText)
