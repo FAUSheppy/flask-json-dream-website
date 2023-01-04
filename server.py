@@ -315,7 +315,7 @@ def sendPicture(path):
         scaleX = round(float(scaleX))
         path = generatePicture(path, scaleX, scaleY, flask.request.args.get("encoding"))
 
-    raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, max_age=cache_timeout)
+    raw = flask.send_from_directory(app.config["PICTURES_DIR"], path, max_age=max_age)
     response = flask.make_response(raw)
     response.headers['X-ATHQ-INTERNAL-FID'] = path
 
