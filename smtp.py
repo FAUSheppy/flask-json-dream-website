@@ -5,6 +5,10 @@ import email.message
 def checkSMTPConnection(app):
     '''Check connection and login on SMTP server configured in app config'''
 
+    if not app.config["SMTP_MUST_BE_CONNECTED"]:
+        print("Warning: SMTP unusable: {}".format(e), file=sys.stderr)
+        return
+
     try:
         if not all([ x in app.config and app.config[x] for x in ["TARGET_SMTP", "TARGET_EMAIL"]]):
             raise smtplib.SMTPException("Missing Configuration.")
@@ -13,11 +17,8 @@ def checkSMTPConnection(app):
             smtp.login(app.config["TARGET_SMTP_USER"], app.config["TARGET_SMTP_PASSWORD"])
         smtpTarget.quit()
     except (smtplib.SMTPException, ConnectionRefusedError) as e:
-        if app.config["SMTP_MUST_BE_CONNECTED"]:
-            print(e, file=sys.stderr)
-            sys.exit(1)
-        else:
-            print("Warning: SMTP unusable: {}".format(e), file=sys.stderr)
+        print(e, file=sys.stderr)
+        sys.exit(1)
 
 def sendMailFromHtmlForm(app, htmlForm):
     '''Take the app config and the contact HTML-form and send a mail accordingly'''
