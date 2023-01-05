@@ -34,7 +34,7 @@ jobs:
           context: ./docker/potaris/
           platforms: linux/amd64
           push: true
-          tags: "${{ secrets.REGISTRY }}/athq/fjsd-potaris:latest"
+          tags: "${{ secrets.REGISTRY }}/athq/potaris:latest"
           build-args: |
             BRANCH=potaris
             CONFIG_BRANCH=master
@@ -48,7 +48,7 @@ jobs:
           context: ./docker/potaris/
           platforms: linux/amd64
           push: true
-          tags: "${{ secrets.REGISTRY }}/athq/fjsd-potaris-en:latest"
+          tags: "${{ secrets.REGISTRY }}/athq/potaris-en:latest"
           build-args: |
             BRANCH=potaris
             CONFIG_BRANCH=en
