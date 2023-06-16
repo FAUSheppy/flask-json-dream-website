@@ -1,4 +1,4 @@
-flask=2.2
+flask==2.2
 caldav
 markdown2
 pillow
