@@ -7,7 +7,7 @@ RUN mkdir /run/secrets/
 RUN --mount=type=secret,id=CONFIG_REPOSITORY_KEY,dst=/run/secrets/CONFIG_REPOSITORY_KEY,required echo "$(cat /run/secrets/CONFIG_REPOSITORY_KEY)" && ls -l /run/secrets
 
 RUN apt update
-RUN apt install python3-pip git -y
+RUN apt install python3-pip git curl -y
 RUN python3 -m pip install waitress
 RUN python3 -m pip install --upgrade pip
 
